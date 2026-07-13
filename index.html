@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sajiin Catering — Pre-Launch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">🥗</span>
+        <span class="logo-text">Sajiin <strong>Catering</strong></span>
+      </a>
+      <a href="#form" class="btn btn-cta btn-sm">Daftar Sekarang</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+
+      <div class="hero-content">
+        <span class="badge">🚀 Segera Hadir · Pre-Launch</span>
+        <h1 class="hero-title">
+          Makan Sehat,<br />
+          <span class="highlight">Tanpa Ribet.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Katering harian bergizi dengan bahan segar pilihan, dikirim langsung ke pintumu. Daftar sekarang dan dapatkan <strong>promo eksklusif pre-launch!</strong>
+        </p>
+
+        <ul class="perks">
+          <li><span class="perk-icon">✅</span> Menu bergizi &amp; lezat tiap hari</li>
+          <li><span class="perk-icon">✅</span> Gratis ongkir untuk 100 pendaftar pertama</li>
+          <li><span class="perk-icon">✅</span> Diskon 20% untuk subscriber awal</li>
+        </ul>
+      </div>
+
+      <!-- Lead Capture Form -->
+      <div class="hero-form" id="form">
+        <div class="form-card">
+          <div class="form-header">
+            <h2>Daftar Pre-Launch</h2>
+            <p>Isi data di bawah untuk mendapatkan penawaran eksklusif.</p>
+          </div>
+          <form id="prelaunch-form" novalidate>
+            <div class="form-group">
+              <label for="name">Nama Lengkap</label>
+              <input type="text" id="name" name="name" placeholder="Nama kamu" required />
+              <span class="error-msg" id="name-error"></span>
+            </div>
+            <div class="form-group">
+              <label for="whatsapp">Nomor WhatsApp</label>
+              <div class="input-with-prefix">
+                <span class="prefix">+62</span>
+                <input type="tel" id="whatsapp" name="whatsapp" placeholder="812-3456-7890" required />
+              </div>
+              <span class="error-msg" id="wa-error"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="email@kamu.com" required />
+              <span class="error-msg" id="email-error"></span>
+            </div>
+            <button type="submit" class="btn btn-cta btn-full">
+              Daftar Pre-Launch 🎉
+            </button>
+            <p class="form-note">🔒 Data kamu aman. Tidak ada spam.</p>
+          </form>
+          <div class="form-success" id="form-success" hidden>
+            <div class="success-icon">🎉</div>
+            <h3>Yeay, kamu terdaftar!</h3>
+            <p>Kami akan menghubungimu via WhatsApp saat pre-launch dimulai.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Decorative blobs -->
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== SOCIAL PROOF STRIP ===== -->
+  <div class="strip">
+    <div class="container strip-inner">
+      <div class="stat">
+        <strong>500+</strong>
+        <span>Pendaftar Antusias</span>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="stat">
+        <strong>100%</strong>
+        <span>Bahan Segar Lokal</span>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="stat">
+        <strong>0 MSG</strong>
+        <span>Tanpa Pengawet</span>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="stat">
+        <strong>10+ Kota</strong>
+        <span>Area Pengiriman</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRICING ===== -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Harga Transparan</span>
+        <h2 class="section-title">Pilih Paket yang Cocok Untukmu</h2>
+        <p class="section-subtitle">Harga pre-launch spesial — berlaku terbatas untuk pendaftar awal.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Card 1: Harian -->
+        <div class="pricing-card">
+          <div class="card-top">
+            <span class="plan-icon">🌿</span>
+            <h3 class="plan-name">Paket Harian</h3>
+            <p class="plan-desc">Cocok untuk dicoba pertama kali</p>
+          </div>
+          <div class="card-price">
+            <span class="price-amount">Rp 50.000</span>
+            <span class="price-period">/ hari</span>
+          </div>
+          <ul class="plan-features">
+            <li><span>✓</span> 1 Porsi makan siang</li>
+            <li><span>✓</span> Menu berganti tiap hari</li>
+            <li><span>✓</span> Gratis ongkir area tertentu</li>
+            <li class="muted"><span>✗</span> Konsultasi menu personal</li>
+            <li class="muted"><span>✗</span> Snack tambahan</li>
+          </ul>
+          <a href="#form" class="btn btn-cta-outline">Pilih Paket</a>
+        </div>
+
+        <!-- Card 2: Mingguan — BEST VALUE -->
+        <div class="pricing-card pricing-card--featured">
+          <div class="badge-featured">⭐ Best Value</div>
+          <div class="card-top">
+            <span class="plan-icon">🥦</span>
+            <h3 class="plan-name">Paket Mingguan</h3>
+            <p class="plan-desc">Pilihan terpopuler pelanggan kami</p>
+          </div>
+          <div class="card-price">
+            <span class="price-amount">Rp 300.000</span>
+            <span class="price-period">/ minggu</span>
+          </div>
+          <div class="price-save">Hemat Rp 50.000</div>
+          <ul class="plan-features">
+            <li><span>✓</span> 7 Porsi makan siang</li>
+            <li><span>✓</span> Variasi 7 menu berbeda</li>
+            <li><span>✓</span> Gratis ongkir semua area</li>
+            <li><span>✓</span> Konsultasi menu personal</li>
+            <li class="muted"><span>✗</span> Snack tambahan</li>
+          </ul>
+          <a href="#form" class="btn btn-cta">Pilih Paket</a>
+        </div>
+
+        <!-- Card 3: Bulanan -->
+        <div class="pricing-card">
+          <div class="card-top">
+            <span class="plan-icon">🌾</span>
+            <h3 class="plan-name">Paket Bulanan</h3>
+            <p class="plan-desc">Terbaik untuk komitmen hidup sehat</p>
+          </div>
+          <div class="card-price">
+            <span class="price-amount">Rp 1.200.000</span>
+            <span class="price-period">/ bulan</span>
+          </div>
+          <div class="price-save">Hemat Rp 300.000</div>
+          <ul class="plan-features">
+            <li><span>✓</span> 30 Porsi makan siang</li>
+            <li><span>✓</span> Menu custom sesuai selera</li>
+            <li><span>✓</span> Gratis ongkir prioritas</li>
+            <li><span>✓</span> Konsultasi menu personal</li>
+            <li><span>✓</span> Snack sehat 2x seminggu</li>
+          </ul>
+          <a href="#form" class="btn btn-cta-outline">Pilih Paket</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="container faq-inner">
+
+      <div class="section-header">
+        <span class="section-tag">Ada Pertanyaan?</span>
+        <h2 class="section-title">Yang Sering Ditanyakan</h2>
+        <p class="section-subtitle">Kalau masih ada yang ingin ditanyakan, hubungi kami via WhatsApp.</p>
+      </div>
+
+      <div class="accordion" role="list">
+
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-1">
+            <span>Apa saja menu yang tersedia di Sajiin Catering?</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel" id="faq-1" hidden>
+            <p>Kami menyediakan berbagai pilihan menu sehat seperti nasi merah dengan lauk bergizi, salad bowl, bento box, dan menu diet khusus (rendah kalori, tinggi protein). Menu dirotasi setiap minggu agar kamu tidak bosan dan nutrisi tetap beragam. Semua menggunakan bahan-bahan segar tanpa MSG dan pengawet buatan.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-2">
+            <span>Area pengiriman mana saja yang tersedia?</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel" id="faq-2" hidden>
+            <p>Saat ini kami melayani pengiriman di area Jabodetabek, Bandung, Surabaya, Yogyakarta, dan Semarang. Kami terus memperluas jangkauan ke lebih banyak kota di Indonesia. Daftarkan kota kamu melalui form di atas agar kami bisa memprioritaskan area pengiriman berikutnya!</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-3">
+            <span>Apa keuntungan mendaftar di masa pre-launch?</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel" id="faq-3" hidden>
+            <p>Pendaftar pre-launch mendapatkan keuntungan eksklusif: diskon 20% untuk langganan pertama, gratis ongkir selama bulan pertama, akses awal untuk memilih paket favorit, dan kesempatan untuk memberikan feedback menu. Selain itu, 100 pendaftar pertama akan mendapatkan hamper welcome kit spesial dari kami!</p>
+          </div>
+        </div>
+
+        <div class="accordion-item" role="listitem">
+          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-4">
+            <span>Kapan layanan Sajiin Catering akan mulai beroperasi?</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-panel" id="faq-4" hidden>
+            <p>Kami menargetkan soft launch pada Agustus 2026, dimulai dari area Jabodetabek. Semua pendaftar pre-launch akan mendapatkan notifikasi via WhatsApp sebelum layanan dibuka. Kamu juga bisa mengikuti update terbaru kami di Instagram <strong>@sajiin.catering</strong> untuk informasi terkini seputar menu dan promo peluncuran.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <span class="logo-icon">🥗</span>
+        <span class="logo-text">Sajiin <strong>Catering</strong></span>
+      </div>
+      <p class="footer-tagline">Sehat itu mudah, lezat itu wajib.</p>
+      <div class="footer-links">
+        <a href="#hero">Beranda</a>
+        <a href="#pricing">Harga</a>
+        <a href="#faq">FAQ</a>
+        <a href="#form">Daftar</a>
+      </div>
+      <p class="footer-copy">© 2026 Sajiin Catering. Dibuat dengan ❤️ di Indonesia.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
