@@ -1,156 +1,345 @@
 /* ============================================================
    Sajiin Catering — main.js
-   Features: Form validation, accordion
+   Features: Countdown timer, form validation, animations
    ============================================================ */
 
-// ── Accordion ──────────────────────────────────────────────
-document.querySelectorAll('.accordion-trigger').forEach((trigger) => {
-  trigger.addEventListener('click', () => {
-    const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-    const panelId = trigger.getAttribute('aria-controls');
-    const panel = document.getElementById(panelId);
+// ── Launch countdown (target: 45 days from now) ────────────
+(function initCountdown() {
+  const LAUNCH = new Date();
+  LAUNCH.setDate(LAUNCH.getDate() + 45);
+  LAUNCH.setHours(0, 0, 0, 0);
 
-    // Close all others
-    document.querySelectorAll('.accordion-trigger').forEach((t) => {
-      t.setAttribute('aria-expanded', 'false');
-    });
-    document.querySelectorAll('.accordion-panel').forEach((p) => {
-      p.hidden = true;
-    });
+  const els = {
+    days:  document.getElementById('cd-days'),
+    hours: document.getElementById('cd-hours'),
+    mins:  document.getElementById('cd-mins'),
+    secs:  document.getElementById('cd-secs'),
+  };
 
-    // Toggle clicked one
-    if (!isExpanded) {
-      trigger.setAttribute('aria-expanded', 'true');
-      panel.hidden = false;
+  function pad(n) { return String(n).padStart(2, '0'); }
 
-      // Smooth reveal via max-height animation
-      panel.style.maxHeight = panel.scrollHeight + 'px';
+  function tick() {
+    const diff = LAUNCH - Date.now();
+    if (diff <= 0) {
+      Object.values(els).forEach(el => { if (el) el.textContent = '00'; });
+      return;
     }
-  });
-});
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
 
-// ── Form Validation ────────────────────────────────────────
-const form = document.getElementById('prelaunch-form');
-const formSuccess = document.getElementById('form-success');
+    if (els.days)  els.days.textContent  = pad(days);
+    if (els.hours) els.hours.textContent = pad(hours);
+    if (els.mins)  els.mins.textContent  = pad(mins);
+    if (els.secs)  els.secs.textContent  = pad(secs);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// ── Form validation & submission ───────────────────────────
+const form       = document.getElementById('signup-form');
+const successBox = document.getElementById('form-success');
+const submitBtn  = document.getElementById('submit-btn');
+
+const nameInput = document.getElementById('full-name');
+const igInput   = document.getElementById('instagram');
+const nameError = document.getElementById('name-error');
+const igError   = document.getElementById('ig-error');
+
+function showErr(input, errEl, msg) {
+  input.classList.add('is-invalid');
+  input.classList.remove('is-valid');
+  errEl.textContent = msg;
+}
+
+function clearErr(input, errEl) {
+  input.classList.remove('is-invalid');
+  errEl.textContent = '';
+}
+
+function markValid(input) {
+  input.classList.remove('is-invalid');
+  input.classList.add('is-valid');
+}
+
+// Live clear on input
+nameInput.addEventListener('input', () => clearErr(nameInput, nameError));
+igInput.addEventListener('input',   () => clearErr(igInput, igError));
+
+// Validate
+function validate() {
+  let ok = true;
+  const name = nameInput.value.trim();
+  const ig   = igInput.value.trim().replace(/^@/, '');
+
+  if (!name || name.length < 2) {
+    showErr(nameInput, nameError, 'Nama minimal 2 karakter.');
+    ok = false;
+  } else {
+    markValid(nameInput);
+  }
+
+  if (!ig || !/^[a-zA-Z0-9._]{1,30}$/.test(ig)) {
+    showErr(igInput, igError, 'Masukkan username Instagram yang valid.');
+    ok = false;
+  } else {
+    markValid(igInput);
+  }
+
+  return ok;
+}
 
 if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    let valid = true;
+    if (!validate()) return;
 
-    // Name
-    const nameInput = document.getElementById('name');
-    const nameError = document.getElementById('name-error');
-    if (!nameInput.value.trim() || nameInput.value.trim().length < 2) {
-      showError(nameInput, nameError, 'Nama minimal 2 karakter.');
-      valid = false;
-    } else {
-      clearError(nameInput, nameError);
-    }
+    // Loading state
+    submitBtn.classList.add('loading');
+    submitBtn.disabled = true;
 
-    // WhatsApp
-    const waInput = document.getElementById('whatsapp');
-    const waError = document.getElementById('wa-error');
-    const waWrapper = waInput.closest('.input-with-prefix');
-    const waVal = waInput.value.trim().replace(/[\s\-]/g, '');
-    if (!waVal || !/^\d{8,13}$/.test(waVal)) {
-      waWrapper.classList.add('invalid');
-      waError.textContent = 'Nomor WhatsApp tidak valid (8–13 digit).';
-      valid = false;
-    } else {
-      waWrapper.classList.remove('invalid');
-      waError.textContent = '';
-    }
+    // ── Replace this URL with your own Web App URL ──
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg5OPDRD0OxIQ24Wj1GIrAq-vC73ENGlq7JZsmxsJYg18mDO0_RlrUM43mqr33XVfCxA/exec';
+    const payload = {
+      nama: nameInput.value.trim(),
+      instagram: igInput.value.trim().replace(/^@/, ''),
+    };
 
-    // Email
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('email-error');
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim() || !emailPattern.test(emailInput.value.trim())) {
-      showError(emailInput, emailError, 'Masukkan email yang valid.');
-      valid = false;
-    } else {
-      clearError(emailInput, emailError);
-    }
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result === 'success') {
+          const igVal = payload.instagram;
+          document.getElementById('success-ig-name').textContent = '@' + igVal;
+          form.hidden = true;
+          // Pastikan variabel 'formSuccess' atau 'successBox' sudah dideklarasikan di atas
+          formSuccess.hidden = false; 
+        } else {
+          throw new Error('Unexpected response');
+        }
+      })
+      .catch(() => {
+        // Show a gentle error without blocking the user
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Coba Lagi';
+        alert('Gagal mendaftar. Coba lagi dalam beberapa saat.');
+      });
+  }); // Akhir dari event listener
+} // Akhir dari if (form)
 
-    if (valid) {
-      // Simulate submission
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.textContent = 'Mendaftar…';
-      submitBtn.disabled = true;
+// ── Scroll-in / entrance animations ────────────────────────
+function animateOnScroll() {
+  const targets = document.querySelectorAll(
+    '.pill-badge, .headline, .subheadline, .countdown, .perks-row, .form-section, .panel-footer'
+  );
 
-      setTimeout(() => {
-        form.hidden = true;
-        formSuccess.hidden = false;
-      }, 1000);
-    }
+  targets.forEach((el, i) => {
+    el.classList.add('fade-in');
+    // Stagger entrance delay based on index
+    el.style.transitionDelay = `${i * 60}ms`;
   });
 
-  // Clear errors on input
-  form.querySelectorAll('input').forEach((input) => {
-    input.addEventListener('input', () => {
-      clearError(input, document.getElementById(input.id + '-error') ||
-        document.getElementById(input.id.replace('whatsapp', 'wa') + '-error'));
-      const wrapper = input.closest('.input-with-prefix');
-      if (wrapper) wrapper.classList.remove('invalid');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  targets.forEach((el) => io.observe(el));
+}
+
+// Food cards staggered entrance
+function animateFoodCards() {
+  const cards = document.querySelectorAll('.food-card, .badge-float');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(28px) scale(.97)';
+    card.style.transition = `opacity .55s ease ${i * 100 + 200}ms, transform .55s ease ${i * 100 + 200}ms`;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        card.style.opacity = '';
+        card.style.transform = '';
+      });
     });
   });
 }
 
-function showError(input, errorEl, message) {
-  input.classList.add('invalid');
-  if (errorEl) errorEl.textContent = message;
-}
+document.addEventListener('DOMContentLoaded', () => {
+  animateOnScroll();
+  animateFoodCards();
+});
 
-function clearError(input, errorEl) {
-  if (input) input.classList.remove('invalid');
-  if (errorEl) errorEl.textContent = '';
-}
 
-// ── Smooth scroll for anchor CTA links ────────────────────
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener('click', (e) => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
+// ── FAQ Accordion ───────────────────────────────────────────
+(function initFaq() {
+  const triggers = document.querySelectorAll('.faq-trigger');
+  if (!triggers.length) return;
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const isOpen   = trigger.getAttribute('aria-expanded') === 'true';
+      const panelId  = trigger.getAttribute('aria-controls');
+      const panel    = document.getElementById(panelId);
+
+      // Close every other open item first
+      triggers.forEach((t) => {
+        if (t === trigger) return;
+        t.setAttribute('aria-expanded', 'false');
+        const p = document.getElementById(t.getAttribute('aria-controls'));
+        if (p) {
+          p.style.maxHeight = '0';
+          // hide after transition so it leaves the flow
+          p.addEventListener('transitionend', () => { p.hidden = true; }, { once: true });
+        }
+      });
+
+      if (isOpen) {
+        // Close this one
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = '0';
+        panel.addEventListener('transitionend', () => { panel.hidden = true; }, { once: true });
+      } else {
+        // Open this one
+        panel.hidden = false;
+        // Allow paint before animating
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            panel.style.maxHeight = panel.scrollHeight + 'px';
+          });
+        });
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Give panels the CSS transition they need
+  const style = document.createElement('style');
+  style.textContent = `
+    .faq-answer {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .35s ease;
+    }
+    .faq-answer:not([hidden]) {
+      /* max-height set by JS */
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+// ── Scroll-reveal for .ds-reveal elements ──────────────────
+(function initReveal() {
+  const targets = document.querySelectorAll('.ds-reveal');
+  if (!targets.length) return;
+
+  // Stagger siblings inside the same parent grid/list
+  const parentMap = new Map();
+  targets.forEach((el) => {
+    const key = el.parentElement;
+    if (!parentMap.has(key)) parentMap.set(key, []);
+    parentMap.get(key).push(el);
+  });
+  parentMap.forEach((siblings) => {
+    siblings.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 90}ms`;
+    });
+  });
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  targets.forEach((el) => io.observe(el));
+})();
+
+// ── Privacy Policy Modal ────────────────────────────────────
+(function initPrivacyModal() {
+  const overlay   = document.getElementById('privacy-overlay');
+  const closeBtn  = document.getElementById('pp-close');
+  const closeCta  = document.getElementById('pp-close-btn');
+  const trigger   = document.querySelector('.privacy-link');
+
+  if (!overlay) return;
+
+  function openModal() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    // Move focus to close button for a11y
+    setTimeout(() => closeBtn && closeBtn.focus(), 50);
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Return focus to trigger
+    if (trigger) trigger.focus();
+  }
+
+  // Open via privacy link
+  if (trigger) {
+    trigger.addEventListener('click', (e) => {
       e.preventDefault();
-      const offset = 80; // navbar height
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      openModal();
+    });
+  }
+
+  // Close via X button
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  // Close via "Saya Mengerti" button
+  if (closeCta) closeCta.addEventListener('click', closeModal);
+
+  // Close on backdrop click (not on modal itself)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+      closeModal();
     }
   });
-});
 
-// ── Scroll-in animation ────────────────────────────────────
-const observerOptions = {
-  threshold: 0.12,
-  rootMargin: '0px 0px -40px 0px',
-};
+  // Trap focus inside modal while open
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const focusable = Array.from(
+      overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+    ).filter((el) => !el.disabled && el.offsetParent !== null);
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
-}, observerOptions);
-
-document.querySelectorAll('.pricing-card, .accordion-item, .stat').forEach((el) => {
-  el.classList.add('fade-up');
-  observer.observe(el);
-});
-
-// Inject fade-up CSS dynamically
-const style = document.createElement('style');
-style.textContent = `
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity .5s ease, transform .5s ease;
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-document.head.appendChild(style);
+})();

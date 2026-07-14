@@ -3,272 +3,667 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sajiin Catering — Pre-Launch</title>
+  <title>Sajiin Catering — Coming Soon</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar">
-    <div class="container nav-inner">
-      <a href="#" class="logo">
-        <span class="logo-icon">🥗</span>
-        <span class="logo-text">Sajiin <strong>Catering</strong></span>
-      </a>
-      <a href="#form" class="btn btn-cta btn-sm">Daftar Sekarang</a>
-    </div>
-  </nav>
+  <!-- ===== NOISE TEXTURE OVERLAY ===== -->
+  <div class="noise" aria-hidden="true"></div>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
-    <div class="container hero-inner">
+  <!-- ===== MAIN LAYOUT ===== -->
+  <main class="main-layout">
 
-      <div class="hero-content">
-        <span class="badge">🚀 Segera Hadir · Pre-Launch</span>
-        <h1 class="hero-title">
-          Makan Sehat,<br />
-          <span class="highlight">Tanpa Ribet.</span>
+    <!-- ── LEFT PANEL ── -->
+    <section class="left-panel" aria-label="Sign up panel">
+
+      <!-- Logo -->
+      <header class="logo-wrap">
+        <div class="logo">
+          <div class="logo-mark">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <circle cx="14" cy="14" r="14" fill="#22C55E"/>
+              <path d="M8 14.5c1.5-3 3.5-5 6-5s4.5 2 5 5c-2 1.5-4 2-5.5 2S9.5 16 8 14.5z" fill="white"/>
+              <circle cx="14" cy="10" r="2" fill="white"/>
+            </svg>
+          </div>
+          <span class="logo-name">Sajiin <strong>Catering</strong></span>
+        </div>
+      </header>
+
+      <!-- Main copy -->
+      <div class="hero-copy">
+        <div class="pill-badge">
+          <span class="pill-dot"></span>
+          Coming Soon
+        </div>
+
+        <h1 class="headline">
+          Healthy food,<br />
+          <em>delivered fresh.</em>
         </h1>
-        <p class="hero-subtitle">
-          Katering harian bergizi dengan bahan segar pilihan, dikirim langsung ke pintumu. Daftar sekarang dan dapatkan <strong>promo eksklusif pre-launch!</strong>
+
+        <p class="subheadline">
+          Katering sehat pertama yang bikin kamu <strong>nagih</strong>.<br />
+          Daftar sekarang & dapatkan penawaran eksklusif peluncuran.
         </p>
 
-        <ul class="perks">
-          <li><span class="perk-icon">✅</span> Menu bergizi &amp; lezat tiap hari</li>
-          <li><span class="perk-icon">✅</span> Gratis ongkir untuk 100 pendaftar pertama</li>
-          <li><span class="perk-icon">✅</span> Diskon 20% untuk subscriber awal</li>
-        </ul>
+        <!-- Countdown -->
+        <div class="countdown" aria-label="Hitung mundur peluncuran">
+          <div class="countdown-block">
+            <span class="count-num" id="cd-days">00</span>
+            <span class="count-label">Hari</span>
+          </div>
+          <span class="count-sep" aria-hidden="true">:</span>
+          <div class="countdown-block">
+            <span class="count-num" id="cd-hours">00</span>
+            <span class="count-label">Jam</span>
+          </div>
+          <span class="count-sep" aria-hidden="true">:</span>
+          <div class="countdown-block">
+            <span class="count-num" id="cd-mins">00</span>
+            <span class="count-label">Menit</span>
+          </div>
+          <span class="count-sep" aria-hidden="true">:</span>
+          <div class="countdown-block">
+            <span class="count-num" id="cd-secs">00</span>
+            <span class="count-label">Detik</span>
+          </div>
+        </div>
+
+        <!-- Perks row -->
+        <div class="perks-row">
+          <div class="perk">
+            <span class="perk-icon" aria-hidden="true">🥗</span>
+            <span>Bahan Segar</span>
+          </div>
+          <div class="perk">
+            <span class="perk-icon" aria-hidden="true">🚚</span>
+            <span>Gratis Ongkir</span>
+          </div>
+          <div class="perk">
+            <span class="perk-icon" aria-hidden="true">✨</span>
+            <span>0 MSG</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Lead Capture Form -->
-      <div class="hero-form" id="form">
-        <div class="form-card">
-          <div class="form-header">
-            <h2>Daftar Pre-Launch</h2>
-            <p>Isi data di bawah untuk mendapatkan penawaran eksklusif.</p>
+      <!-- Sign-up Form -->
+      <div class="form-section">
+        <form id="signup-form" novalidate>
+          <div class="field-group">
+            <label for="full-name">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              Nama Kamu
+            </label>
+            <input
+              type="text"
+              id="full-name"
+              name="full-name"
+              placeholder="Contoh: Budi Santoso"
+              autocomplete="name"
+              required
+            />
+            <span class="field-error" id="name-error" role="alert"></span>
           </div>
-          <form id="prelaunch-form" novalidate>
-            <div class="form-group">
-              <label for="name">Nama Lengkap</label>
-              <input type="text" id="name" name="name" placeholder="Nama kamu" required />
-              <span class="error-msg" id="name-error"></span>
+
+          <div class="field-group">
+            <label for="instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              Username Instagram
+            </label>
+            <div class="input-prefix-wrap">
+              <span class="input-prefix">@</span>
+              <input
+                type="text"
+                id="instagram"
+                name="instagram"
+                placeholder="username_kamu"
+                autocomplete="off"
+                required
+              />
             </div>
-            <div class="form-group">
-              <label for="whatsapp">Nomor WhatsApp</label>
-              <div class="input-with-prefix">
-                <span class="prefix">+62</span>
-                <input type="tel" id="whatsapp" name="whatsapp" placeholder="812-3456-7890" required />
+            <span class="field-error" id="ig-error" role="alert"></span>
+          </div>
+
+          <button type="submit" class="btn-register" id="submit-btn">
+            <span class="btn-text">Register Now</span>
+            <span class="btn-icon" aria-hidden="true">→</span>
+            <span class="btn-loader" aria-hidden="true"></span>
+          </button>
+
+          <a href="#privacy" class="privacy-link">Our Privacy Policy</a>
+        </form>
+
+        <!-- Success state -->
+        <div class="form-success" id="form-success" hidden aria-live="polite">
+          <div class="success-anim" aria-hidden="true">
+            <svg viewBox="0 0 52 52" fill="none">
+              <circle class="success-circle" cx="26" cy="26" r="25" stroke="#22C55E" stroke-width="2"/>
+              <path class="success-check" d="M14 26l9 9 15-18" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Kamu sudah terdaftar! 🎉</h3>
+          <p>Kami akan follow balik segera dan mengirim notifikasi peluncuran untukmu.</p>
+          <p class="success-ig" id="success-ig-name"></p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="panel-footer">
+        <p>© 2026 Sajiin Catering · Made with ❤️ in Indonesia</p>
+        <div class="social-row">
+          <a href="#" aria-label="Instagram Sajiin Catering">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok Sajiin Catering">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+        </div>
+      </footer>
+
+    </section>
+
+    <!-- ── RIGHT PANEL — Food Photo Collage ── -->
+    <section class="right-panel" aria-label="Food photography">
+
+      <!-- Background gradient blob -->
+      <div class="rp-blob" aria-hidden="true"></div>
+
+      <!-- Floating food cards -->
+      <div class="food-grid">
+
+        <div class="food-card food-card--hero">
+          <div class="food-img food-img--bowl" role="img" aria-label="Quinoa bowl with grilled vegetables"></div>
+          <div class="food-card-info">
+            <span class="food-tag">🥗 Signature Bowl</span>
+            <p class="food-name">Quinoa Rainbow Bowl</p>
+            <p class="food-cal">320 kcal · High Protein</p>
+          </div>
+        </div>
+
+        <div class="food-card food-card--sm food-card--float-1">
+          <div class="food-img food-img--chicken" role="img" aria-label="Grilled chicken with herbs"></div>
+          <div class="food-card-info food-card-info--sm">
+            <span class="food-tag">🍗 Protein+</span>
+            <p class="food-name">Herb Grilled Chicken</p>
+          </div>
+        </div>
+
+        <div class="food-card food-card--sm food-card--float-2">
+          <div class="food-img food-img--salad" role="img" aria-label="Fresh garden salad"></div>
+          <div class="food-card-info food-card-info--sm">
+            <span class="food-tag">🌿 Fresh</span>
+            <p class="food-name">Garden Detox Salad</p>
+          </div>
+        </div>
+
+        <div class="food-card food-card--sm food-card--float-3">
+          <div class="food-img food-img--smoothie" role="img" aria-label="Green smoothie bowl"></div>
+          <div class="food-card-info food-card-info--sm">
+            <span class="food-tag">🥤 Boost</span>
+            <p class="food-name">Green Smoothie Bowl</p>
+          </div>
+        </div>
+
+        <!-- Floating stat badges -->
+        <div class="badge-float badge-float--1" aria-hidden="true">
+          <span class="bf-emoji">⭐</span>
+          <div>
+            <strong>4.9</strong>
+            <small>Rating</small>
+          </div>
+        </div>
+
+        <div class="badge-float badge-float--2" aria-hidden="true">
+          <span class="bf-emoji">🔥</span>
+          <div>
+            <strong>500+</strong>
+            <small>Pre-register</small>
+          </div>
+        </div>
+
+        <div class="badge-float badge-float--3" aria-hidden="true">
+          <span class="bf-emoji">🌱</span>
+          <div>
+            <strong>100%</strong>
+            <small>Organic</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tagline overlay -->
+      <div class="rp-tagline" aria-hidden="true">
+        <p>"Sehat itu<br/>lezat."</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== PRIVACY POLICY MODAL ===== -->
+  <div
+    class="pp-overlay"
+    id="privacy-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="pp-title"
+    aria-hidden="true"
+  >
+    <div class="pp-modal">
+
+      <!-- Header -->
+      <div class="pp-header">
+        <div class="pp-header-left">
+          <span class="pp-icon" aria-hidden="true">🔒</span>
+          <h2 class="pp-title" id="pp-title">Privacy Policy</h2>
+        </div>
+        <button class="pp-close" id="pp-close" aria-label="Tutup Privacy Policy">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="pp-body">
+
+        <div class="pp-section">
+          <div class="pp-section-icon pp-section-icon--green" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="pp-section-content">
+            <h3 class="pp-section-title">Data yang Kami Kumpulkan</h3>
+            <p class="pp-section-body">Kami hanya mengumpulkan <strong>nama lengkap</strong> dan <strong>username Instagram</strong> kamu melalui formulir pendaftaran waitlist ini. Tidak ada data lain yang diminta atau disimpan.</p>
+          </div>
+        </div>
+
+        <div class="pp-section">
+          <div class="pp-section-icon pp-section-icon--orange" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.85a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="pp-section-content">
+            <h3 class="pp-section-title">Tujuan Penggunaan Data</h3>
+            <p class="pp-section-body">Data kamu digunakan <strong>semata-mata</strong> untuk menghubungimu saat Sajiin Catering resmi diluncurkan dan untuk keperluan komunikasi pre-launch, seperti info promo eksklusif dan jadwal peluncuran.</p>
+          </div>
+        </div>
+
+        <div class="pp-section">
+          <div class="pp-section-icon pp-section-icon--green" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="pp-section-content">
+            <h3 class="pp-section-title">Keamanan Data</h3>
+            <p class="pp-section-body">Data kamu disimpan dengan aman dan <strong>tidak akan dibagikan</strong> kepada pihak ketiga mana pun tanpa persetujuan eksplisit darimu. Kami berkomitmen menjaga privasi setiap pendaftar.</p>
+          </div>
+        </div>
+
+        <div class="pp-section">
+          <div class="pp-section-icon pp-section-icon--orange" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="pp-section-content">
+            <h3 class="pp-section-title">Hak Kamu</h3>
+            <p class="pp-section-body">Kamu berhak meminta <strong>penghapusan data</strong> kapan saja dengan menghubungi kami melalui Instagram. Permintaan akan diproses dalam 1×24 jam kerja.</p>
+          </div>
+        </div>
+
+      </div><!-- /pp-body -->
+
+      <!-- Footer -->
+      <div class="pp-footer">
+        <p class="pp-footer-note">Sajiin Catering — Jakarta. Layanan ini belum resmi beroperasi.</p>
+        <button class="pp-close-btn" id="pp-close-btn">Saya Mengerti</button>
+      </div>
+
+    </div><!-- /pp-modal -->
+  </div><!-- /pp-overlay -->
+
+  <!-- ================================================================
+       DETAIL SECTION — Menu · Pricing · T&C · FAQ
+       ================================================================ -->
+  <div class="detail-section" id="detail">
+
+    <!-- ── INTRO BANNER ── -->
+    <div class="ds-intro">
+      <div class="ds-container">
+        <div class="ds-intro-inner">
+          <span class="ds-eyebrow">Dirancang untuk wanita sibuk</span>
+          <h2 class="ds-intro-title">Diet sehat yang <em>praktis</em>,<br/>konsisten, dan tetap lezat.</h2>
+          <p class="ds-intro-body">Sajiin hadir untuk membantu kamu menjaga pola makan sehat di tengah padatnya jadwal kerja — tanpa drama, tanpa ribet.</p>
+        </div>
+        <div class="ds-intro-stats">
+          <div class="ds-stat"><span class="ds-stat-num">350–450</span><span class="ds-stat-label">kcal / porsi</span></div>
+          <div class="ds-stat-sep" aria-hidden="true"></div>
+          <div class="ds-stat"><span class="ds-stat-num">0</span><span class="ds-stat-label">MSG &amp; Pengawet</span></div>
+          <div class="ds-stat-sep" aria-hidden="true"></div>
+          <div class="ds-stat"><span class="ds-stat-num">100%</span><span class="ds-stat-label">Cita Rasa Nusantara</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 1. MENU CATEGORIES ── -->
+    <section class="ds-section" id="menu" aria-labelledby="menu-heading">
+      <div class="ds-container">
+        <div class="ds-section-header">
+          <span class="ds-tag ds-tag--green">🥗 Menu Paket</span>
+          <h2 class="ds-section-title" id="menu-heading">Pilih kategori yang sesuai tujuanmu</h2>
+          <p class="ds-section-sub">Dua kategori dengan komposisi makro seimbang, diolah dari bahan segar lokal pilihan.</p>
+        </div>
+
+        <div class="cat-grid">
+
+          <!-- Category A: Fit Shape -->
+          <div class="cat-card cat-card--shape ds-reveal">
+            <div class="cat-card-top">
+              <div class="cat-badge cat-badge--shape">Fit Shape</div>
+              <h3 class="cat-name">Nusantara Low-Calorie</h3>
+              <p class="cat-goal">Menjaga &amp; menurunkan berat badan dengan menu rendah kalori bergaya Nusantara.</p>
+              <div class="cat-kcal">
+                <span class="kcal-num">350–450</span>
+                <span class="kcal-unit">kcal</span>
               </div>
-              <span class="error-msg" id="wa-error"></span>
             </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="email@kamu.com" required />
-              <span class="error-msg" id="email-error"></span>
+
+            <div class="macro-bar-wrap">
+              <div class="macro-bar">
+                <div class="macro-seg macro-seg--fiber"  style="width:50%" title="Fiber 50%"></div>
+                <div class="macro-seg macro-seg--carb"   style="width:25%" title="Carbs 25%"></div>
+                <div class="macro-seg macro-seg--protein"style="width:25%" title="Protein 25%"></div>
+              </div>
+              <div class="macro-legend">
+                <span class="ml ml--fiber">50% Serat</span>
+                <span class="ml ml--carb">25% Karbo</span>
+                <span class="ml ml--protein">25% Protein</span>
+              </div>
             </div>
-            <button type="submit" class="btn btn-cta btn-full">
-              Daftar Pre-Launch 🎉
+
+            <div class="menu-list-wrap">
+              <p class="menu-list-label">Contoh Menu Harian</p>
+              <ul class="menu-list">
+                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Ayam bakar sambal matah, nasi merah &amp; tumis sayur</li>
+                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Pepes ikan dengan nasi jagung &amp; sayur asem</li>
+                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Ayam woku rendah minyak, nasi putih takar &amp; tumis buncis</li>
+                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Daging lada hitam rendah gula, nasi merah &amp; brokoli</li>
+                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Bacem tahu &amp; tempe rendah gula dengan telur &amp; sayuran</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Category B: Fit Glow -->
+          <div class="cat-card cat-card--glow ds-reveal">
+            <div class="cat-card-top">
+              <div class="cat-badge cat-badge--glow">Fit Glow</div>
+              <h3 class="cat-name">Nourishing Indonesian Flavors</h3>
+              <p class="cat-goal">Nutrisi pilihan untuk mendukung kulit sehat &amp; bercahaya dari dalam.</p>
+              <div class="cat-kcal">
+                <span class="kcal-num">350–450</span>
+                <span class="kcal-unit">kcal</span>
+              </div>
+            </div>
+
+            <div class="macro-bar-wrap">
+              <div class="macro-bar">
+                <div class="macro-seg macro-seg--fiber"  style="width:50%"></div>
+                <div class="macro-seg macro-seg--carb"   style="width:25%"></div>
+                <div class="macro-seg macro-seg--protein"style="width:25%"></div>
+              </div>
+              <div class="macro-legend">
+                <span class="ml ml--fiber">50% Serat</span>
+                <span class="ml ml--carb">25% Karbo</span>
+                <span class="ml ml--protein">25% Protein</span>
+              </div>
+            </div>
+
+            <div class="menu-list-wrap">
+              <p class="menu-list-label">Contoh Menu Harian</p>
+              <ul class="menu-list">
+                <li><span class="menu-bullet" aria-hidden="true">✨</span>Salmon sambal matah, nasi merah &amp; tumis wortel brokoli</li>
+                <li><span class="menu-bullet" aria-hidden="true">✨</span>Ayam woku, nasi jagung &amp; tumis buncis paprika</li>
+                <li><span class="menu-bullet" aria-hidden="true">✨</span>Pepes tuna, nasi merah &amp; sayur asem</li>
+                <li><span class="menu-bullet" aria-hidden="true">✨</span>Dory bakar, ubi panggang &amp; tumis bayam</li>
+                <li><span class="menu-bullet" aria-hidden="true">✨</span>Bacem tahu &amp; tempe, nasi merah &amp; tumis pakcoy wortel</li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /cat-grid -->
+      </div>
+    </section>
+
+    <!-- ── 2. PRICING ── -->
+    <section class="ds-section ds-section--tinted" id="pricing" aria-labelledby="pricing-heading">
+      <div class="ds-container">
+        <div class="ds-section-header">
+          <span class="ds-tag ds-tag--orange">💳 Paket Langganan</span>
+          <h2 class="ds-section-title" id="pricing-heading">Harga transparan, tanpa biaya tersembunyi</h2>
+          <p class="ds-section-sub">Semua paket berlaku per minggu, dapat dikombinasikan dengan kedua kategori menu.</p>
+        </div>
+
+        <div class="pricing-grid">
+
+          <!-- Plan 1 -->
+          <div class="pr-card ds-reveal">
+            <div class="pr-card-top">
+              <span class="pr-plan-icon" aria-hidden="true">🥡</span>
+              <h3 class="pr-plan-name">Paket Lite</h3>
+              <p class="pr-plan-tagline">Mulai perjalanan sehat kamu</p>
+            </div>
+            <div class="pr-price-wrap">
+              <span class="pr-currency">Rp</span>
+              <span class="pr-amount">175.000</span>
+              <span class="pr-period">/ minggu</span>
+            </div>
+            <p class="pr-meals">1x makan / hari · 7 hari</p>
+            <ul class="pr-features">
+              <li><span class="pr-check" aria-hidden="true">✓</span> 7 porsi makan utama</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
+              <li class="pr-feat-muted"><span aria-hidden="true">—</span> Snack tidak termasuk</li>
+              <li class="pr-feat-muted"><span aria-hidden="true">—</span> Pengiriman 1x / hari</li>
+            </ul>
+            <a href="#detail" class="pr-btn pr-btn--outline">Pilih Paket</a>
+          </div>
+
+          <!-- Plan 2 — Featured -->
+          <div class="pr-card pr-card--featured ds-reveal">
+            <div class="pr-badge-best">Paling Populer ⭐</div>
+            <div class="pr-card-top">
+              <span class="pr-plan-icon" aria-hidden="true">🍱</span>
+              <h3 class="pr-plan-name">Paket Balance</h3>
+              <p class="pr-plan-tagline">Lengkap untuk pagi &amp; siang hari</p>
+            </div>
+            <div class="pr-price-wrap">
+              <span class="pr-currency">Rp</span>
+              <span class="pr-amount">310.000</span>
+              <span class="pr-period">/ minggu</span>
+            </div>
+            <p class="pr-meals">2x makan / hari · 7 hari</p>
+            <ul class="pr-features">
+              <li><span class="pr-check" aria-hidden="true">✓</span> 14 porsi makan utama</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Add-on snack tersedia</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Pengiriman 2x / hari</li>
+            </ul>
+            <a href="#detail" class="pr-btn pr-btn--solid">Pilih Paket</a>
+          </div>
+
+          <!-- Plan 3 -->
+          <div class="pr-card ds-reveal">
+            <div class="pr-card-top">
+              <span class="pr-plan-icon" aria-hidden="true">🌟</span>
+              <h3 class="pr-plan-name">Paket Full Day</h3>
+              <p class="pr-plan-tagline">Nutrisi lengkap sepanjang hari</p>
+            </div>
+            <div class="pr-price-wrap">
+              <span class="pr-currency">Rp</span>
+              <span class="pr-amount">450.000</span>
+              <span class="pr-period">/ minggu</span>
+            </div>
+            <p class="pr-meals">3x makan + 2 snack / hari · 7 hari</p>
+            <ul class="pr-features">
+              <li><span class="pr-check" aria-hidden="true">✓</span> 21 porsi makan utama</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> 14 snack sehat sudah termasuk</li>
+              <li><span class="pr-check" aria-hidden="true">✓</span> Pengiriman 3x / hari</li>
+            </ul>
+            <a href="#detail" class="pr-btn pr-btn--outline">Pilih Paket</a>
+          </div>
+
+        </div><!-- /pricing-grid -->
+
+        <p class="pricing-note">
+          <span aria-hidden="true">🏠</span>
+          Diskon khusus untuk pembelian minimal 2 paket yang dikirim ke alamat yang sama.
+          <a href="#faq">Pelajari lebih lanjut →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ── 3. TERMS & CONDITIONS ── -->
+    <section class="ds-section" id="tnc" aria-labelledby="tnc-heading">
+      <div class="ds-container">
+        <div class="ds-section-header">
+          <span class="ds-tag ds-tag--green">📋 Syarat &amp; Ketentuan</span>
+          <h2 class="ds-section-title" id="tnc-heading">Yang perlu kamu tahu</h2>
+          <p class="ds-section-sub">Transparan dari awal, supaya kamu bisa memesan dengan tenang.</p>
+        </div>
+
+        <div class="tnc-grid">
+          <div class="tnc-card ds-reveal">
+            <div class="tnc-icon-wrap tnc-icon--green" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <h4 class="tnc-title">Menu Berganti Setiap Hari</h4>
+            <p class="tnc-body">Kamu tidak akan mendapatkan menu yang sama dua hari berturut-turut. Variasi menu dirancang untuk memastikan asupan nutrisi yang beragam setiap harinya.</p>
+          </div>
+
+          <div class="tnc-card ds-reveal">
+            <div class="tnc-icon-wrap tnc-icon--orange" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h4 class="tnc-title">Snack Tersedia sebagai Add-on</h4>
+            <p class="tnc-body">Paket Lite &amp; Balance tidak menyertakan snack secara default. Kamu dapat menambahkan snack sehat sebagai add-on dengan biaya tambahan saat memesan.</p>
+          </div>
+
+          <div class="tnc-card ds-reveal">
+            <div class="tnc-icon-wrap tnc-icon--green" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h4 class="tnc-title">Minimum Pemesanan 1 Minggu</h4>
+            <p class="tnc-body">Setiap paket berlaku untuk durasi minimal 1 minggu (7 hari). Konsistensi adalah kunci untuk mencapai tujuan kesehatanmu bersama Sajiin.</p>
+          </div>
+
+          <div class="tnc-card ds-reveal">
+            <div class="tnc-icon-wrap tnc-icon--orange" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h4 class="tnc-title">Diskon untuk Pemesanan Bersama</h4>
+            <p class="tnc-body">Dapatkan harga spesial jika kamu memesan minimal 2 paket yang dikirimkan ke alamat yang sama — cocok untuk kamu dan rekan kantor, atau keluarga di rumah.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 4. FAQ ── -->
+    <section class="ds-section ds-section--tinted" id="faq" aria-labelledby="faq-heading">
+      <div class="ds-container ds-container--narrow">
+        <div class="ds-section-header">
+          <span class="ds-tag ds-tag--green">❓ FAQ</span>
+          <h2 class="ds-section-title" id="faq-heading">Pertanyaan yang sering ditanyakan</h2>
+          <p class="ds-section-sub">Tidak menemukan jawaban? Hubungi kami lewat DM Instagram.</p>
+        </div>
+
+        <div class="faq-list" role="list">
+
+          <div class="faq-item ds-reveal" role="listitem">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-1">
+              <span>Apakah ada minimum pemesanan?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
             </button>
-            <p class="form-note">🔒 Data kamu aman. Tidak ada spam.</p>
-          </form>
-          <div class="form-success" id="form-success" hidden>
-            <div class="success-icon">🎉</div>
-            <h3>Yeay, kamu terdaftar!</h3>
-            <p>Kami akan menghubungimu via WhatsApp saat pre-launch dimulai.</p>
+            <div class="faq-answer" id="faq-ans-1" hidden>
+              <p>Ya. Minimum pemesanan adalah <strong>1 paket untuk 1 minggu</strong> (7 hari pengiriman). Kami tidak melayani pemesanan harian satuan agar kamu bisa merasakan manfaat pola makan konsisten dari program Sajiin.</p>
+            </div>
           </div>
+
+          <div class="faq-item ds-reveal" role="listitem">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-2">
+              <span>Apakah saya bisa menambah snack ke paket saya?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-ans-2" hidden>
+              <p>Tentu! Snack sehat tersedia sebagai <strong>add-on</strong> untuk Paket Lite dan Paket Balance. Kamu bisa menambahkannya langsung saat proses pemesanan. Paket Full Day sudah menyertakan 2 snack per hari secara otomatis.</p>
+            </div>
+          </div>
+
+          <div class="faq-item ds-reveal" role="listitem">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-3">
+              <span>Bagaimana cara mendapatkan diskon paket bersama?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-ans-3" hidden>
+              <p>Diskon berlaku secara otomatis jika kamu memesan <strong>minimal 2 paket</strong> (untuk 2 orang atau lebih) dengan satu alamat pengiriman yang sama. Cocok untuk kamu dan rekan kantor, pasangan, atau anggota keluarga. Nominal diskon akan tampil pada halaman checkout.</p>
+            </div>
+          </div>
+
+          <div class="faq-item ds-reveal" role="listitem">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-4">
+              <span>Apakah menu bisa disesuaikan dengan pantangan makanan saya?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-ans-4" hidden>
+              <p>Saat ini kami menyediakan menu standar yang sudah bebas MSG dan pengawet. Untuk alergi atau pantangan spesifik (misalnya alergi seafood atau bebas gluten), silakan hubungi tim kami via DM sebelum memesan agar kami bisa memberikan saran terbaik.</p>
+            </div>
+          </div>
+
+          <div class="faq-item ds-reveal" role="listitem">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-5">
+              <span>Jam berapa makanan akan dikirimkan?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-ans-5" hidden>
+              <p>Pengiriman dilakukan sesuai jumlah makan di paketmu: makan pagi diantar pukul <strong>06.30–07.30</strong>, makan siang pukul <strong>11.00–12.00</strong>, dan makan malam pukul <strong>17.00–18.00</strong> (khusus Paket Full Day). Kamu akan menerima notifikasi WhatsApp setiap kali pesanan dalam perjalanan.</p>
+            </div>
+          </div>
+
+        </div><!-- /faq-list -->
+      </div>
+    </section>
+
+    <!-- ── BOTTOM CTA ── -->
+    <div class="ds-bottom-cta">
+      <div class="ds-container">
+        <div class="ds-cta-inner">
+          <div class="ds-cta-copy">
+            <h3>Siap mulai perjalanan sehatmu?</h3>
+            <p>Daftar pre-launch sekarang dan dapatkan penawaran eksklusif untuk pendaftar pertama.</p>
+          </div>
+          <a href="#form" class="ds-cta-btn">
+            Daftar Pre-Launch
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
         </div>
       </div>
-
     </div>
 
-    <!-- Decorative blobs -->
-    <div class="blob blob-1" aria-hidden="true"></div>
-    <div class="blob blob-2" aria-hidden="true"></div>
-  </section>
-
-  <!-- ===== SOCIAL PROOF STRIP ===== -->
-  <div class="strip">
-    <div class="container strip-inner">
-      <div class="stat">
-        <strong>500+</strong>
-        <span>Pendaftar Antusias</span>
-      </div>
-      <div class="divider" aria-hidden="true"></div>
-      <div class="stat">
-        <strong>100%</strong>
-        <span>Bahan Segar Lokal</span>
-      </div>
-      <div class="divider" aria-hidden="true"></div>
-      <div class="stat">
-        <strong>0 MSG</strong>
-        <span>Tanpa Pengawet</span>
-      </div>
-      <div class="divider" aria-hidden="true"></div>
-      <div class="stat">
-        <strong>10+ Kota</strong>
-        <span>Area Pengiriman</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== PRICING ===== -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Harga Transparan</span>
-        <h2 class="section-title">Pilih Paket yang Cocok Untukmu</h2>
-        <p class="section-subtitle">Harga pre-launch spesial — berlaku terbatas untuk pendaftar awal.</p>
-      </div>
-
-      <div class="pricing-grid">
-
-        <!-- Card 1: Harian -->
-        <div class="pricing-card">
-          <div class="card-top">
-            <span class="plan-icon">🌿</span>
-            <h3 class="plan-name">Paket Harian</h3>
-            <p class="plan-desc">Cocok untuk dicoba pertama kali</p>
-          </div>
-          <div class="card-price">
-            <span class="price-amount">Rp 50.000</span>
-            <span class="price-period">/ hari</span>
-          </div>
-          <ul class="plan-features">
-            <li><span>✓</span> 1 Porsi makan siang</li>
-            <li><span>✓</span> Menu berganti tiap hari</li>
-            <li><span>✓</span> Gratis ongkir area tertentu</li>
-            <li class="muted"><span>✗</span> Konsultasi menu personal</li>
-            <li class="muted"><span>✗</span> Snack tambahan</li>
-          </ul>
-          <a href="#form" class="btn btn-cta-outline">Pilih Paket</a>
-        </div>
-
-        <!-- Card 2: Mingguan — BEST VALUE -->
-        <div class="pricing-card pricing-card--featured">
-          <div class="badge-featured">⭐ Best Value</div>
-          <div class="card-top">
-            <span class="plan-icon">🥦</span>
-            <h3 class="plan-name">Paket Mingguan</h3>
-            <p class="plan-desc">Pilihan terpopuler pelanggan kami</p>
-          </div>
-          <div class="card-price">
-            <span class="price-amount">Rp 300.000</span>
-            <span class="price-period">/ minggu</span>
-          </div>
-          <div class="price-save">Hemat Rp 50.000</div>
-          <ul class="plan-features">
-            <li><span>✓</span> 7 Porsi makan siang</li>
-            <li><span>✓</span> Variasi 7 menu berbeda</li>
-            <li><span>✓</span> Gratis ongkir semua area</li>
-            <li><span>✓</span> Konsultasi menu personal</li>
-            <li class="muted"><span>✗</span> Snack tambahan</li>
-          </ul>
-          <a href="#form" class="btn btn-cta">Pilih Paket</a>
-        </div>
-
-        <!-- Card 3: Bulanan -->
-        <div class="pricing-card">
-          <div class="card-top">
-            <span class="plan-icon">🌾</span>
-            <h3 class="plan-name">Paket Bulanan</h3>
-            <p class="plan-desc">Terbaik untuk komitmen hidup sehat</p>
-          </div>
-          <div class="card-price">
-            <span class="price-amount">Rp 1.200.000</span>
-            <span class="price-period">/ bulan</span>
-          </div>
-          <div class="price-save">Hemat Rp 300.000</div>
-          <ul class="plan-features">
-            <li><span>✓</span> 30 Porsi makan siang</li>
-            <li><span>✓</span> Menu custom sesuai selera</li>
-            <li><span>✓</span> Gratis ongkir prioritas</li>
-            <li><span>✓</span> Konsultasi menu personal</li>
-            <li><span>✓</span> Snack sehat 2x seminggu</li>
-          </ul>
-          <a href="#form" class="btn btn-cta-outline">Pilih Paket</a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FAQ ===== -->
-  <section class="faq" id="faq">
-    <div class="container faq-inner">
-
-      <div class="section-header">
-        <span class="section-tag">Ada Pertanyaan?</span>
-        <h2 class="section-title">Yang Sering Ditanyakan</h2>
-        <p class="section-subtitle">Kalau masih ada yang ingin ditanyakan, hubungi kami via WhatsApp.</p>
-      </div>
-
-      <div class="accordion" role="list">
-
-        <div class="accordion-item" role="listitem">
-          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-1">
-            <span>Apa saja menu yang tersedia di Sajiin Catering?</span>
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-          <div class="accordion-panel" id="faq-1" hidden>
-            <p>Kami menyediakan berbagai pilihan menu sehat seperti nasi merah dengan lauk bergizi, salad bowl, bento box, dan menu diet khusus (rendah kalori, tinggi protein). Menu dirotasi setiap minggu agar kamu tidak bosan dan nutrisi tetap beragam. Semua menggunakan bahan-bahan segar tanpa MSG dan pengawet buatan.</p>
-          </div>
-        </div>
-
-        <div class="accordion-item" role="listitem">
-          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-2">
-            <span>Area pengiriman mana saja yang tersedia?</span>
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-          <div class="accordion-panel" id="faq-2" hidden>
-            <p>Saat ini kami melayani pengiriman di area Jabodetabek, Bandung, Surabaya, Yogyakarta, dan Semarang. Kami terus memperluas jangkauan ke lebih banyak kota di Indonesia. Daftarkan kota kamu melalui form di atas agar kami bisa memprioritaskan area pengiriman berikutnya!</p>
-          </div>
-        </div>
-
-        <div class="accordion-item" role="listitem">
-          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-3">
-            <span>Apa keuntungan mendaftar di masa pre-launch?</span>
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-          <div class="accordion-panel" id="faq-3" hidden>
-            <p>Pendaftar pre-launch mendapatkan keuntungan eksklusif: diskon 20% untuk langganan pertama, gratis ongkir selama bulan pertama, akses awal untuk memilih paket favorit, dan kesempatan untuk memberikan feedback menu. Selain itu, 100 pendaftar pertama akan mendapatkan hamper welcome kit spesial dari kami!</p>
-          </div>
-        </div>
-
-        <div class="accordion-item" role="listitem">
-          <button class="accordion-trigger" aria-expanded="false" aria-controls="faq-4">
-            <span>Kapan layanan Sajiin Catering akan mulai beroperasi?</span>
-            <span class="accordion-icon" aria-hidden="true"></span>
-          </button>
-          <div class="accordion-panel" id="faq-4" hidden>
-            <p>Kami menargetkan soft launch pada Agustus 2026, dimulai dari area Jabodetabek. Semua pendaftar pre-launch akan mendapatkan notifikasi via WhatsApp sebelum layanan dibuka. Kamu juga bisa mengikuti update terbaru kami di Instagram <strong>@sajiin.catering</strong> untuk informasi terkini seputar menu dan promo peluncuran.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-logo">
-        <span class="logo-icon">🥗</span>
-        <span class="logo-text">Sajiin <strong>Catering</strong></span>
-      </div>
-      <p class="footer-tagline">Sehat itu mudah, lezat itu wajib.</p>
-      <div class="footer-links">
-        <a href="#hero">Beranda</a>
-        <a href="#pricing">Harga</a>
-        <a href="#faq">FAQ</a>
-        <a href="#form">Daftar</a>
-      </div>
-      <p class="footer-copy">© 2026 Sajiin Catering. Dibuat dengan ❤️ di Indonesia.</p>
-    </div>
-  </footer>
+  </div><!-- /detail-section -->
 
   <script src="main.js"></script>
 </body>
