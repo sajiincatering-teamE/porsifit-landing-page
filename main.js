@@ -108,29 +108,28 @@ if (form) {
       instagram: igInput.value.trim().replace(/^@/, ''),
     };
 
+    // no-cors mode: Google Apps Script doesn't send CORS headers that
+    // satisfy a credentialed fetch, so we use no-cors (opaque response).
+    // We can't read the response body, but the data still lands in the Sheet.
     fetch(SCRIPT_URL, {
-      method: 'POST',
+      method:  'POST',
+      mode:    'no-cors',          // ← key fix: skips CORS check
       headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
+      body:    JSON.stringify(payload),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.result === 'success') {
-          const igVal = payload.instagram;
-          document.getElementById('success-ig-name').textContent = '@' + igVal;
-          form.hidden = true;
-          // Pastikan variabel 'formSuccess' atau 'successBox' sudah dideklarasikan di atas
-          formSuccess.hidden = false; 
-        } else {
-          throw new Error('Unexpected response');
-        }
+      .then(() => {
+        // With no-cors we always get an opaque response — treat reaching
+        // here as success (the POST was sent).
+        const igVal = payload.instagram;
+        document.getElementById('success-ig-name').textContent = '@' + igVal;
+        form.hidden   = true;
+        successBox.hidden = false;   // ← fix: was incorrectly named formSuccess
       })
       .catch(() => {
-        // Show a gentle error without blocking the user
         submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
+        submitBtn.disabled    = false;
         submitBtn.textContent = 'Coba Lagi';
-        alert('Gagal mendaftar. Coba lagi dalam beberapa saat.');
+        alert('Tidak dapat terhubung. Periksa koneksi internetmu dan coba lagi.');
       });
   }); // Akhir dari event listener
 } // Akhir dari if (form)
