@@ -1,670 +1,998 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Porsifit Catering — Coming Soon</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PorsiFit — Healthy Nusantara Catering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F8F0DE;
+    --cream-soft:#FCF8ED;
+    --green:#BBDF81;
+    --green-deep:#5C7A5B;
+    --coral:#EFACA5;
+    --coral-deep:#C97D77;
+    --ink:#3A2E28;
+    --ink-soft:#6b5c53;
+    --line: rgba(58,46,40,0.12);
+    --radius: 26px;
+    /* Bayangan dasar untuk kartu/elemen besar */
+    --shadow: 0 10px 30px rgba(58,46,40,0.08);
+    /* Bayangan khusus untuk foto agar terlihat terangkat */
+    --photo-shadow: 0 8px 25px rgba(58,46,40,0.15);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    margin:0;
+    line-height:1.05;
+  }
+  p{line-height:1.6;color:var(--ink-soft);}
+  a{text-decoration:none;color:inherit;}
+  ul{margin:0;padding:0;list-style:none;}
+  img{max-width:100%;display:block;}
+  section{padding:96px 24px;}
+  .wrap{max-width:1140px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--coral);
+    color:#5c231e;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:.02em;
+    padding:8px 16px;
+    border-radius:999px;
+    margin-bottom:20px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:16px 30px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:15px;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    cursor:pointer;
+    border:none;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--green-deep);color:var(--cream-soft);box-shadow:0 8px 20px rgba(92,122,91,.35);}
+  .btn-coral{background:var(--coral-deep);color:#fff8f6;box-shadow:0 8px 20px rgba(201,125,119,.35);}
+  .btn-outline{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none;padding:14px 28px;}
+  .btn-ghost{background:rgba(58,46,40,0.06);color:var(--ink);box-shadow:none;}
+
+  /* ---------- Logo mark ---------- */
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-word{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:22px;letter-spacing:.01em;}
+  .logo-word .p1{color:var(--coral-deep);}
+  .logo-word .p2{color:var(--green-deep);}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:rgba(248,240,222,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1140px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;
+  }
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{font-weight:600;font-size:14.5px;color:var(--ink);opacity:.8;}
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{display:flex;align-items:center;}
+  .nav-cta .btn{padding:11px 22px;font-size:13.5px;}
+  .burger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .burger span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:120px 24px 100px;
+    overflow:hidden;
+    background-image: 
+      linear-gradient(to right, rgba(248,240,222,0.95) 40%, rgba(248,240,222,0.6) 100%), 
+      url('background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .hero-inner{
+    max-width:1140px;margin:0 auto;
+    display:block; 
+    text-align:center;
+  }
+  .hero-inner > div{
+    max-width:720px;
+    margin: 0 auto;
+  }
+  .hero h1{font-size:clamp(38px,6vw,64px);color:var(--ink);}
+  .hero h1 .accent{color:var(--coral-deep);}
+  .hero p.lead{font-size:19px;margin:24px auto 36px;}
+  .hero-cta-row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;}
+  .hero-note{font-size:13px;color:var(--ink-soft);margin-top:16px;}
+
+  /* ---------- Section heading pattern ---------- */
+  .sec-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .sec-head h2{font-size:clamp(28px,3.6vw,40px);}
+  .sec-head p{font-size:16px;margin-top:12px;}
+  .sec-eyebrow{
+    font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--green-deep);margin-bottom:10px;display:block;
+  }
+
+  /* ---------- Packages ---------- */
+  .packages{background:var(--cream-soft);}
+  .pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .pkg-card{
+    border-radius:var(--radius);
+    padding:36px 32px 32px;
+    background:#fff;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+    border-top:6px solid transparent;
+  }
+  .pkg-card.shape{border-top-color:var(--green-deep);}
+  .pkg-card.glow{border-top-color:var(--coral-deep);}
+  .pkg-tag{font-size:13px;font-weight:700;letter-spacing:.03em;margin-bottom:10px;}
+  .pkg-card.shape .pkg-tag{color:var(--green-deep);}
+  .pkg-card.glow .pkg-tag{color:var(--coral-deep);}
+  .pkg-card h3{font-size:28px;margin-bottom:10px;}
+  .pkg-card.shape h3{color:var(--green-deep);}
+  .pkg-card.glow h3{color:var(--coral-deep);}
+  .pkg-card p.desc{font-size:14.5px;margin-bottom:20px;}
+  .pkg-photo{
+    width:100%;aspect-ratio:16/10;border-radius:18px;margin-bottom:20px;
+    overflow:hidden; position:relative;
+    background:var(--cream);
+    box-shadow: var(--photo-shadow); 
+  }
+  .pkg-photo img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+  .pkg-caption{
+    display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+    margin-bottom:20px;flex-wrap:wrap;
+  }
+  .pkg-caption strong{
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:15px;color:var(--ink);
+  }
+  .pkg-caption span{
+    font-size:12px;color:var(--ink-soft);
+  }
+  .pkg-feats{margin:0 0 22px;}
+  .pkg-feats li{
+    display:flex;gap:10px;align-items:flex-start;
+    font-size:14.5px;color:var(--ink);margin-bottom:10px;
+  }
+  .pkg-feats li svg{flex:none;margin-top:2px;}
+  .pkg-macros{
+    display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;
+  }
+  .macro{
+    background:var(--cream);
+    border-radius:12px;
+    padding:8px 12px;
+    font-size:12.5px;font-weight:700;color:var(--ink-soft);
+  }
+  .pkg-card .btn{margin-top:auto;width:100%;}
+
+  /* ---------- USP (Kenapa PorsiFit) ---------- MODIFIED */
+  .sec-head-usp {
+    text-align: left; /* Berdasarkan gambar, judul cenderung lebih fleksibel, mari set ke kiri atau tengah, kita pakai default center */
+    margin: 0 auto 48px;
+    max-width: 800px;
+  }
+  .sec-head-usp h2 {
+    font-size: clamp(32px, 4vw, 44px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  
+  .usp-photo{
+    position:relative;
+    border-radius:24px;overflow:hidden;
+    margin-bottom:40px;
+    aspect-ratio:21/8;
+    box-shadow:var(--photo-shadow); 
+  }
+  .usp-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .usp-photo-caption{
+    position:absolute;left:24px;bottom:20px;
+    background:rgba(248,240,222,.92);
+    padding:10px 18px;border-radius:999px;
+    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:14px;color:var(--ink);
+  }
+  .usp-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .usp-item{
+    background:#fff;
+    border-radius:18px;
+    padding:24px 20px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:row; /* Horizontal layout seperti di gambar */
+    align-items:flex-start;
+    gap:16px;
+  }
+  .usp-icon{
+    width:58px;height:58px;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    color: #fff;
+  }
+  .usp-icon.bg-coral { background: var(--coral-deep); }
+  .usp-icon.bg-green { background: var(--green-deep); }
+  .usp-icon svg { width: 28px; height: 28px; }
+  
+  .usp-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .usp-content h4 {
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:16px;
+    font-weight: 700;
+    color:var(--ink);
+    margin:0;
+  }
+  .usp-content p {
+    font-size:13px;
+    margin:0;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ---------- Promo ---------- */
+  .promo{
+    background:var(--green-deep);
+    border-radius:32px;
+    max-width:1140px;margin:0 auto;
+    padding:64px 48px;
+    text-align:center;
+    color:var(--cream-soft);
+    position:relative;
+    overflow:hidden;
+  }
+  .promo::before{
+    content:'';position:absolute;width:340px;height:340px;border-radius:50%;
+    background:rgba(255,255,255,.06);top:-140px;right:-80px;
+  }
+  .promo::after{
+    content:'';position:absolute;width:240px;height:240px;border-radius:50%;
+    background:rgba(255,255,255,.05);bottom:-120px;left:-60px;
+  }
+  .promo-icon{
+    width:74px;height:74px;border-radius:50%;
+    background:rgba(255,255,255,.14);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 20px;position:relative;z-index:1;
+  }
+  .promo h2{font-size:clamp(24px,3.6vw,36px);color:#fff;position:relative;z-index:1;}
+  .promo p{color:rgba(248,240,222,.9);max-width:480px;margin:16px auto 30px;position:relative;z-index:1;font-weight:600;}
+  .promo .btn-coral{position:relative;z-index:1;}
+  .promo-tnc{
+    font-weight:400 !important;font-size:12px !important;color:rgba(248,240,222,.65) !important;
+    margin:24px auto 0 !important;line-height:1.7;
+  }
+
+  /* ---------- Price List ---------- */
+  .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .price-card{
+    background:#fff;border-radius:24px;padding:34px 30px;box-shadow:var(--shadow);
+    border-top:6px solid transparent;
+  }
+  .price-card.shape{border-top-color:var(--green-deep);}
+  .price-card.glow{border-top-color:var(--coral-deep);}
+  .price-card h3{font-size:24px;margin-bottom:8px;}
+  .price-card.shape h3{color:var(--green-deep);}
+  .price-card.glow h3{color:var(--coral-deep);}
+  .price-start{font-style:italic;color:var(--ink-soft);font-size:14px;margin-bottom:24px;}
+  .price-start strong{color:var(--ink);font-style:normal;}
+  .price-rows{display:flex;flex-direction:column;gap:12px;}
+  .price-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 18px;border-radius:14px;font-size:14.5px;font-weight:600;color:var(--ink);
+  }
+  .price-card.shape .price-row{background:var(--cream);}
+  .price-card.glow .price-row{background:#FBEAE7;}
+  .price-row strong{font-size:16px;}
+  .price-card.shape .price-row strong{color:var(--green-deep);}
+  .price-card.glow .price-row strong{color:var(--coral-deep);}
+
+  /* ---------- Closing quote ---------- */
+  .quote-section{
+    background:var(--coral-deep);
+    border-radius:32px;
+    max-width:1140px;margin:0 auto;
+    padding:64px 56px;
+    position:relative;overflow:hidden;
+    color:#fff;
+  }
+  .quote-section::before{
+    content:'';position:absolute;width:300px;height:300px;border-radius:50%;
+    background:rgba(255,255,255,.08);top:-120px;right:-90px;
+  }
+  .quote-section::after{
+    content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+    background:rgba(255,255,255,.07);top:60px;right:20px;
+  }
+  .quote-mark{
+    width:56px;height:56px;border-radius:16px;
+    background:rgba(255,255,255,.16);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Baloo 2',sans-serif;font-size:30px;font-weight:700;color:#fff;
+    margin-bottom:24px;position:relative;z-index:1;
+  }
+  .quote-section h2{
+    font-size:clamp(28px,4vw,42px);color:#fff;max-width:640px;position:relative;z-index:1;margin-bottom:14px;
+  }
+  .quote-section p.quote-sub{
+    font-style:italic;color:rgba(255,255,255,.88);max-width:520px;
+    font-size:15.5px;position:relative;z-index:1;margin-bottom:30px;
+  }
+  .quote-section .btn{position:relative;z-index:1;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;margin:0 auto;}
+  details{
+    background:#fff;border-radius:18px;padding:6px 24px;margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  summary{
+    cursor:pointer;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;font-weight:700;font-size:15.5px;color:var(--ink);
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary .plus{
+    width:22px;height:22px;flex:none;border-radius:50%;
+    background:var(--cream);display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:var(--green-deep);transition:transform .2s ease;
+  }
+  details[open] summary .plus{transform:rotate(45deg);}
+  details p{padding:0 0 20px;margin:0;font-size:14.5px;}
+
+  /* ---------- Form ---------- */
+  .form-section{background:var(--cream-soft);}
+  .form-card{
+    max-width:520px;margin:0 auto;
+    background:#fff;border-radius:var(--radius);
+    padding:44px 40px;box-shadow:var(--shadow);
+    text-align:center;
+  }
+  .form-card h2{font-size:26px;margin-bottom:10px;}
+  .form-card p.lead{font-size:14.5px;margin-bottom:28px;}
+  .field{text-align:left;margin-bottom:18px;}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  .field input,.field select{
+    width:100%;padding:13px 16px;border-radius:12px;
+    border:1.5px solid var(--line);background:var(--cream);
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;color:var(--ink);
+    outline:none;
+  }
+  .field input:focus,.field select:focus{border-color:var(--green-deep);}
+  .form-card .btn{width:100%;margin-top:6px;}
+  .form-success{
+    display:none;flex-direction:column;align-items:center;gap:10px;
+  }
+  .form-success svg{width:52px;height:52px;}
+  .form-success h3{font-size:20px;}
+  .form-success p{font-size:14px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:var(--cream-soft);padding:56px 24px 28px;}
+  .footer-top{
+    max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:32px;padding-bottom:32px;border-bottom:1px solid rgba(248,240,222,.14);
+  }
+  footer .logo-word .p1{color:var(--coral);}
+  footer .logo-word .p2{color:var(--green);}
+  .footer-desc{max-width:280px;font-size:13.5px;color:rgba(248,240,222,.6);margin-top:12px;}
+  .footer-links{display:flex;gap:64px;flex-wrap:wrap;}
+  .footer-col h5{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:rgba(248,240,222,.55);margin-bottom:14px;}
+  .footer-col a{display:block;font-size:14px;margin-bottom:10px;color:rgba(248,240,222,.85);}
+  .footer-social{display:flex;gap:12px;margin-top:14px;}
+  .footer-social a{
+    width:38px;height:38px;border-radius:50%;background:rgba(248,240,222,.1);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .footer-desc a{display:inline;color:rgba(248,240,222,0.85);font-size:inherit;}
+  .footer-bottom{
+    max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;
+    padding-top:22px;font-size:12.5px;color:rgba(248,240,222,.5);flex-wrap:wrap;gap:10px;
+  }
+
+  /* ---------- Popup modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(58,46,40,.55);
+    display:none;align-items:center;justify-content:center;
+    z-index:200;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--cream-soft);border-radius:28px;
+    max-width:720px;width:100%;padding:36px;position:relative;
+    max-height:90vh;overflow-y:auto;
+  }
+  .modal-close{
+    position:absolute;top:18px;right:18px;
+    width:36px;height:36px;border-radius:50%;background:#fff;border:none;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);
+  }
+  .modal-head{text-align:center;margin-bottom:26px;}
+  .modal-head span.eyebrow{margin-bottom:10px;}
+  .modal-head h2{font-size:26px;}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px;}
+  .modal-pkg{border-radius:18px;padding:20px;color:#fff;}
+  .modal-pkg.shape{background:linear-gradient(150deg,#93b968,var(--green-deep));}
+  .modal-pkg.glow{background:linear-gradient(150deg,#dd8f88,var(--coral-deep));}
+  .modal-pkg h4{font-family:'Baloo 2',sans-serif;font-size:19px;margin-bottom:6px;}
+  .modal-pkg p{color:rgba(255,255,255,.9);font-size:12.5px;margin-bottom:12px;}
+  .modal-pkg .macro{background:rgba(255,255,255,.18);color:#fff;}
+  .modal .btn{width:100%;}
+  .legal-doc{font-size:14px;color:var(--ink-soft);}
+  .legal-doc h4{
+    font-family:'Baloo 2',sans-serif;font-size:16px;color:var(--ink);
+    margin:22px 0 8px;
+  }
+  .legal-doc h4:first-child{margin-top:0;}
+  .legal-doc p{margin:0 0 10px;}
+  .legal-doc ul{margin:0 0 10px;padding-left:18px;list-style:disc;}
+  .legal-doc li{margin-bottom:6px;line-height:1.6;}
+  .legal-doc .updated{
+    font-size:12px;color:var(--ink-soft);opacity:.7;margin-bottom:20px;display:block;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .hero{padding:80px 18px 60px;}
+    .hero p.lead{font-size:17px;margin:20px auto 30px;}
+    .pkg-grid{grid-template-columns:1fr;}
+    .price-grid{grid-template-columns:1fr;}
+    .usp-grid{grid-template-columns:1fr 1fr;}
+    .modal-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .burger{display:block;}
+    .footer-links{gap:36px;}
+  }
+  @media (max-width:520px){
+    section{padding:64px 18px;}
+    .hero h1{font-size:34px;} 
+    .usp-photo{aspect-ratio:16/9;} 
+    .usp-grid{grid-template-columns:1fr;}
+    .promo{padding:48px 24px;}
+    .quote-section{padding:44px 28px;}
+    .form-card{padding:32px 22px;}
+  }
+</style>
 </head>
 <body>
 
-  <!-- ===== NOISE TEXTURE OVERLAY ===== -->
-  <div class="noise" aria-hidden="true"></div>
+<!-- ============ HEADER ============ -->
+<header>
+  <nav>
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <circle cx="17" cy="17" r="17" fill="#BBDF81"/>
+        <path d="M12 9v7.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V9M13.8 9v16M20.5 9c-1.3 0-2.3 1.6-2.3 4.5S19.2 18 20.5 18s2.3-2.1 2.3-4.5S21.8 9 20.5 9zM20.5 18v7" stroke="#F8F0DE" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-word"><span class="p1">Porsi</span><span class="p2">Fit</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#beranda">Beranda</a>
+      <a href="#paket">Paket</a>
+      <a href="#pricelist">Harga</a>
+      <a href="#kenapa">Kenapa PorsiFit</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#form" class="btn btn-primary">Konsultasi Sekarang</a>
+    </div>
+    <button class="burger" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display==='flex'?'none':'flex'">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
 
-  <!-- ===== MAIN LAYOUT ===== -->
-  <main class="main-layout">
-
-    <!-- ── LEFT PANEL ── -->
-    <section class="left-panel" aria-label="Sign up panel">
-
-      <!-- Logo -->
-      <header class="logo-wrap">
-        <div class="logo">
-          <div class="logo-mark">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-              <circle cx="14" cy="14" r="14" fill="#22C55E"/>
-              <path d="M8 14.5c1.5-3 3.5-5 6-5s4.5 2 5 5c-2 1.5-4 2-5.5 2S9.5 16 8 14.5z" fill="white"/>
-              <circle cx="14" cy="10" r="2" fill="white"/>
-            </svg>
-          </div>
-          <span class="logo-name">Porsifit <strong>Catering</strong></span>
-        </div>
-      </header>
-
-      <!-- Main copy -->
-      <div class="hero-copy">
-        <div class="pill-badge">
-          <span class="pill-dot"></span>
-          Coming Soon
-        </div>
-
-        <h1 class="headline">
-          Healthy food,<br />
-          <em>delivered fresh.</em>
-        </h1>
-
-        <p class="subheadline">
-          Katering sehat pertama yang bikin kamu <strong>nagih</strong>.<br />
-          Daftar sekarang & dapatkan penawaran eksklusif peluncuran.
-        </p>
-
-        <!-- Countdown -->
-        <div class="countdown" aria-label="Hitung mundur peluncuran">
-          <div class="countdown-block">
-            <span class="count-num" id="cd-days">00</span>
-            <span class="count-label">Hari</span>
-          </div>
-          <span class="count-sep" aria-hidden="true">:</span>
-          <div class="countdown-block">
-            <span class="count-num" id="cd-hours">00</span>
-            <span class="count-label">Jam</span>
-          </div>
-          <span class="count-sep" aria-hidden="true">:</span>
-          <div class="countdown-block">
-            <span class="count-num" id="cd-mins">00</span>
-            <span class="count-label">Menit</span>
-          </div>
-          <span class="count-sep" aria-hidden="true">:</span>
-          <div class="countdown-block">
-            <span class="count-num" id="cd-secs">00</span>
-            <span class="count-label">Detik</span>
-          </div>
-        </div>
-
-        <!-- Perks row -->
-        <div class="perks-row">
-          <div class="perk">
-            <span class="perk-icon" aria-hidden="true">🥗</span>
-            <span>Bahan Segar</span>
-          </div>
-          <div class="perk">
-            <span class="perk-icon" aria-hidden="true">🚚</span>
-            <span>Gratis Ongkir</span>
-          </div>
-          <div class="perk">
-            <span class="perk-icon" aria-hidden="true">✨</span>
-            <span>0 MSG</span>
-          </div>
-        </div>
+<!-- ============ HERO / BANNER ============ -->
+<section class="hero" id="beranda">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">✨ Prelaunch PorsiFit — kuota terbatas</span>
+      <h1>Healthy meals bercita rasa <span class="accent">Nusantara</span></h1>
+      <p class="lead">Untuk kamu yang sibuk dan ingin tetap fit tanpa harus masak atau hitung kalori. Semua udah dihitung, tinggal makan.</p>
+      <div class="hero-cta-row">
+        <a href="#form" class="btn btn-primary">Konsultasi Sekarang</a>
+        <a href="#paket" class="btn btn-outline">Lihat Paket</a>
       </div>
+      <p class="hero-note">Gratis konsultasi menu · Tanpa komitmen berlangganan</p>
+    </div>
+  </div>
+</section>
 
-      <!-- Sign-up Form -->
-      <div class="form-section">
-        <form id="signup-form" novalidate>
-          <div class="field-group">
-            <label for="full-name">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              Nama Kamu
-            </label>
-            <input
-              type="text"
-              id="full-name"
-              name="full-name"
-              placeholder="Contoh: Budi Santoso"
-              autocomplete="name"
-              required
-            />
-            <span class="field-error" id="name-error" role="alert"></span>
-          </div>
-
-          <div class="field-group">
-            <label for="instagram">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              Username Instagram
-            </label>
-            <div class="input-prefix-wrap">
-              <span class="input-prefix">@</span>
-              <input
-                type="text"
-                id="instagram"
-                name="instagram"
-                placeholder="username_kamu"
-                autocomplete="off"
-                required
-              />
-            </div>
-            <span class="field-error" id="ig-error" role="alert"></span>
-          </div>
-
-          <button type="submit" class="btn-register" id="submit-btn">
-            <span class="btn-text">Register Now</span>
-            <span class="btn-icon" aria-hidden="true">→</span>
-            <span class="btn-loader" aria-hidden="true"></span>
-          </button>
-
-          <a href="#privacy" class="privacy-link">Our Privacy Policy</a>
-        </form>
-
-        <!-- Success state -->
-        <div class="form-success" id="form-success" hidden aria-live="polite">
-          <div class="success-anim" aria-hidden="true">
-            <svg viewBox="0 0 52 52" fill="none">
-              <circle class="success-circle" cx="26" cy="26" r="25" stroke="#22C55E" stroke-width="2"/>
-              <path class="success-check" d="M14 26l9 9 15-18" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>Kamu sudah terdaftar! 🎉</h3>
-          <p>Kami akan follow balik segera dan mengirim notifikasi peluncuran untukmu.</p>
-          <p class="success-ig" id="success-ig-name"></p>
+<!-- ============ PACKAGES ============ -->
+<section class="packages" id="paket">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">Pilihan Paket</span>
+      <h2>Satu tujuan, dua rasa</h2>
+      <p>Dua menu harian dengan porsi dan gizi yang sudah dihitung, tinggal pilih sesuai tujuan tubuhmu.</p>
+    </div>
+    <div class="pkg-grid">
+      <!-- Shape -->
+      <div class="pkg-card shape">
+        <span class="pkg-tag">UNTUK TUBUH IDEAL</span>
+        <h3>PorsiFit Shape</h3>
+        <p class="desc">Porsi terukur, rendah kalori, tinggi protein. Bantu bentuk badan tanpa drama diet ketat.</p>
+        <div class="pkg-photo">
+          <img src="paket1.jpg" alt="Ayam Sambal Matah">
         </div>
+        <div class="pkg-caption">
+          <strong>Ayam Sambal Matah</strong>
+          <span>Nasi merah · Brokoli · Tomat cherry</span>
+        </div>
+        <ul class="pkg-feats">
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#5C7A5B"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Kalori terkontrol per porsi</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#5C7A5B"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Tinggi protein, mengenyangkan</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#5C7A5B"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Cocok untuk program berat badan</li>
+        </ul>
+        <div class="pkg-macros">
+          <span class="macro">390 kcal</span>
+          <span class="macro">Protein 35g</span>
+          <span class="macro">Omega-3</span>
+          <span class="macro">High Protein</span>
+        </div>
+        <a href="#form" class="btn btn-primary">Order Sekarang</a>
       </div>
-
-      <!-- Footer -->
-      <footer class="panel-footer">
-        <p>© 2026 Porsifit Catering · Made with ❤️ in Indonesia</p>
-        <div class="social-row">
-          <a href="#" aria-label="Instagram Porsifit Catering">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
-          <a href="#" aria-label="TikTok Porsifit Catering">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
-          </a>
+      <!-- Glow -->
+      <div class="pkg-card glow">
+        <span class="pkg-tag">UNTUK KULIT SEHAT BERCAHAYA</span>
+        <h3>PorsiFit Glow</h3>
+        <p class="desc">Kaya antioksidan dan bahan alami penunjang kulit. Cantik dari dalam, mulai dari piring.</p>
+        <div class="pkg-photo">
+          <img src="paket2.jpg" alt="Salmon Sambal Matah">
         </div>
-      </footer>
-
-    </section>
-
-    <!-- ── RIGHT PANEL — Food Photo Collage ── -->
-    <section class="right-panel" aria-label="Food photography">
-
-      <!-- Background gradient blob -->
-      <div class="rp-blob" aria-hidden="true"></div>
-
-      <!-- Floating food cards -->
-      <div class="food-grid">
-
-        <div class="food-card food-card--hero">
-          <div class="food-img food-img--bowl" role="img" aria-label="Quinoa bowl with grilled vegetables"></div>
-          <div class="food-card-info">
-            <span class="food-tag">🥗 Signature Bowl</span>
-            <p class="food-name">Quinoa Rainbow Bowl</p>
-            <p class="food-cal">320 kcal · High Protein</p>
-          </div>
+        <div class="pkg-caption">
+          <strong>Salmon Sambal Matah</strong>
+          <span>Nasi merah · Brokoli · Wortel</span>
         </div>
-
-        <div class="food-card food-card--sm food-card--float-1">
-          <div class="food-img food-img--chicken" role="img" aria-label="Grilled chicken with herbs"></div>
-          <div class="food-card-info food-card-info--sm">
-            <span class="food-tag">🍗 Protein+</span>
-            <p class="food-name">Herb Grilled Chicken</p>
-          </div>
+        <ul class="pkg-feats">
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#C97D77"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Tinggi antioksidan dan vitamin C</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#C97D77"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Bahan penunjang kesehatan kulit</li>
+          <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#C97D77"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Cocok untuk rutinitas glowing harian</li>
+        </ul>
+        <div class="pkg-macros">
+          <span class="macro">420 kcal</span>
+          <span class="macro">Protein 32g</span>
+          <span class="macro">Omega-3</span>
+          <span class="macro">High Protein</span>
         </div>
-
-        <div class="food-card food-card--sm food-card--float-2">
-          <div class="food-img food-img--salad" role="img" aria-label="Fresh garden salad"></div>
-          <div class="food-card-info food-card-info--sm">
-            <span class="food-tag">🌿 Fresh</span>
-            <p class="food-name">Garden Detox Salad</p>
-          </div>
-        </div>
-
-        <div class="food-card food-card--sm food-card--float-3">
-          <div class="food-img food-img--smoothie" role="img" aria-label="Green smoothie bowl"></div>
-          <div class="food-card-info food-card-info--sm">
-            <span class="food-tag">🥤 Boost</span>
-            <p class="food-name">Green Smoothie Bowl</p>
-          </div>
-        </div>
-
-        <!-- Floating stat badges -->
-        <div class="badge-float badge-float--1" aria-hidden="true">
-          <span class="bf-emoji">⭐</span>
-          <div>
-            <strong>4.9</strong>
-            <small>Rating</small>
-          </div>
-        </div>
-
-        <div class="badge-float badge-float--2" aria-hidden="true">
-          <span class="bf-emoji">🔥</span>
-          <div>
-            <strong>500+</strong>
-            <small>Pre-register</small>
-          </div>
-        </div>
-
-        <div class="badge-float badge-float--3" aria-hidden="true">
-          <span class="bf-emoji">🌱</span>
-          <div>
-            <strong>100%</strong>
-            <small>Organic</small>
-          </div>
-        </div>
-
+        <a href="#form" class="btn btn-coral">Order Sekarang</a>
       </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Tagline overlay -->
-      <div class="rp-tagline" aria-hidden="true">
-        <p>"Sehat itu<br/>lezat."</p>
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- ===== PRIVACY POLICY MODAL ===== -->
-  <div
-    class="pp-overlay"
-    id="privacy-overlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="pp-title"
-    aria-hidden="true"
-  >
-    <div class="pp-modal">
-
-      <!-- Header -->
-      <div class="pp-header">
-        <div class="pp-header-left">
-          <span class="pp-icon" aria-hidden="true">🔒</span>
-          <h2 class="pp-title" id="pp-title">Privacy Policy</h2>
-        </div>
-        <button class="pp-close" id="pp-close" aria-label="Tutup Privacy Policy">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
+<!-- ============ USP (Kenapa PorsiFit) ============ MODIFIED -->
+<section id="kenapa">
+  <div class="wrap">
+    <div class="sec-head-usp">
+      <h2>PorsiFit — Solusi Diet yang Lebih Mudah</h2>
+    </div>
+    <div class="usp-photo">
+      <img src="gambar2.jpg" alt="Meal prep PorsiFit siap antar">
+      <div class="usp-photo-caption">🍱 Disiapkan segar tiap hari</div>
+    </div>
+    
+    <div class="usp-grid">
+      <!-- Item 1: Homemade (Merah) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-coral">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3L4 9v12h5v-7h6v7h5V9z"/>
           </svg>
-        </button>
+        </div>
+        <div class="usp-content">
+          <h4>100% Homemade</h4>
+          <p>Dimasak langsung dari dapur kami, untuk menciptakan rasa autentik nusantara</p>
+        </div>
       </div>
 
-      <!-- Body -->
-      <div class="pp-body">
-
-        <div class="pp-section">
-          <div class="pp-section-icon pp-section-icon--green" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="pp-section-content">
-            <h3 class="pp-section-title">Data yang Kami Kumpulkan</h3>
-            <p class="pp-section-body">Kami hanya mengumpulkan <strong>nama lengkap</strong> dan <strong>username Instagram</strong> kamu melalui formulir pendaftaran waitlist ini. Tidak ada data lain yang diminta atau disimpan.</p>
-          </div>
+      <!-- Item 2: Kalori (Hijau) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 21H3V3"/><path d="M7 21v-4"/><path d="M11 21v-4"/><path d="M15 21v-4"/><path d="M3 7h4"/><path d="M3 11h4"/><path d="M3 15h4"/>
+          </svg>
         </div>
-
-        <div class="pp-section">
-          <div class="pp-section-icon pp-section-icon--orange" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.85a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </div>
-          <div class="pp-section-content">
-            <h3 class="pp-section-title">Tujuan Penggunaan Data</h3>
-            <p class="pp-section-body">Data kamu digunakan <strong>semata-mata</strong> untuk menghubungimu saat Porsifit Catering resmi diluncurkan dan untuk keperluan komunikasi pre-launch, seperti info promo eksklusif dan jadwal peluncuran.</p>
-          </div>
+        <div class="usp-content">
+          <h4>Kalori &amp; Porsi Terukur</h4>
+          <p>Setiap makanan yang disajikan mempunyai keterangan kalori dan makro nutrisi yang jelas</p>
         </div>
-
-        <div class="pp-section">
-          <div class="pp-section-icon pp-section-icon--green" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="pp-section-content">
-            <h3 class="pp-section-title">Keamanan Data</h3>
-            <p class="pp-section-body">Data kamu disimpan dengan aman dan <strong>tidak akan dibagikan</strong> kepada pihak ketiga mana pun tanpa persetujuan eksplisit darimu. Kami berkomitmen menjaga privasi setiap pendaftar.</p>
-          </div>
-        </div>
-
-        <div class="pp-section">
-          <div class="pp-section-icon pp-section-icon--orange" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-          <div class="pp-section-content">
-            <h3 class="pp-section-title">Hak Kamu</h3>
-            <p class="pp-section-body">Kamu berhak meminta <strong>penghapusan data</strong> kapan saja dengan menghubungi kami melalui Instagram. Permintaan akan diproses dalam 1×24 jam kerja.</p>
-          </div>
-        </div>
-
-      </div><!-- /pp-body -->
-
-      <!-- Footer -->
-      <div class="pp-footer">
-        <p class="pp-footer-note">Porsifit Catering — Jakarta. Layanan ini belum resmi beroperasi.</p>
-        <button class="pp-close-btn" id="pp-close-btn">Saya Mengerti</button>
       </div>
 
-    </div><!-- /pp-modal -->
-  </div><!-- /pp-overlay -->
-
-  <!-- ================================================================
-       DETAIL SECTION — Menu · Pricing · T&C · FAQ
-       ================================================================ -->
-  <div class="detail-section" id="detail">
-
-    <!-- ── INTRO BANNER ── -->
-    <div class="ds-intro">
-      <div class="ds-container">
-        <div class="ds-intro-inner">
-          <span class="ds-eyebrow">Dirancang untuk wanita sibuk</span>
-          <h2 class="ds-intro-title">Diet sehat yang <em>praktis</em>,<br/>konsisten, dan tetap lezat.</h2>
-          <p class="ds-intro-body">Porsifit hadir untuk membantu kamu menjaga pola makan sehat di tengah padatnya jadwal kerja — tanpa drama, tanpa ribet.</p>
+      <!-- Item 3: Menu Nusantara (Merah) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-coral">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10H2zm2-2h16V8H4v2z"/>
+          </svg>
         </div>
-        <div class="ds-intro-stats">
-          <div class="ds-stat"><span class="ds-stat-num">350–450</span><span class="ds-stat-label">kcal / porsi</span></div>
-          <div class="ds-stat-sep" aria-hidden="true"></div>
-          <div class="ds-stat"><span class="ds-stat-num">0</span><span class="ds-stat-label">MSG &amp; Pengawet</span></div>
-          <div class="ds-stat-sep" aria-hidden="true"></div>
-          <div class="ds-stat"><span class="ds-stat-num">100%</span><span class="ds-stat-label">Cita Rasa Nusantara</span></div>
+        <div class="usp-content">
+          <h4>Pilihan Menu Nusantara</h4>
+          <p>Menyajikan banyak pilihan menu dengan tema nusantara</p>
+        </div>
+      </div>
+
+      <!-- Item 4: Pengiriman (Hijau) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-green">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 7h-3V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10h2a3 3 0 0 0 6 0h4a3 3 0 0 0 6 0h2v-4l-3-5zM8 17a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm10 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm-1-7h2.5l1.8 3H17v-3z"/>
+          </svg>
+        </div>
+        <div class="usp-content">
+          <h4>Pengiriman Fleksibel</h4>
+          <p>Menyediakan layanan 7 hari dalam seminggu dan pengantaran kemana saja</p>
+        </div>
+      </div>
+
+      <!-- Item 5: Kesehatan Kulit (Merah) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-coral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 3l-6 6-4-4 6-6 4 4z"/><path d="M3 21l8-8"/><path d="M10 5l1-1"/><path d="M5 10l-1 1"/><path d="M18 19l1 1"/><path d="M19 18l1-1"/>
+          </svg>
+        </div>
+        <div class="usp-content">
+          <h4>Menunjang Kesehatan Kulit</h4>
+          <p>Mengandung nutrisi yang dibutuhkan oleh kulit</p>
+        </div>
+      </div>
+
+      <!-- Item 6: Halal (Hijau) -->
+      <div class="usp-item">
+        <div class="usp-icon bg-green">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 2.4L18 4l1.6 3.4L22 9l-1.4 3 1.4 3-2.4 1.6L18 20l-3.6-.4L12 22l-2.4-2.4L6 20l-1.6-3.4L2 15l1.4-3L2 9l2.4-1.6L6 4l3.6.4L12 2z"/>
+          </svg>
+        </div>
+        <div class="usp-content">
+          <h4>Bersertifikasi Halal</h4>
+          <p>Memiliki sertifikat halal MUI sehingga aman dikonsumsi semua individu</p>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- ── 1. MENU CATEGORIES ── -->
-    <section class="ds-section" id="menu" aria-labelledby="menu-heading">
-      <div class="ds-container">
-        <div class="ds-section-header">
-          <span class="ds-tag ds-tag--green">🥗 Menu Paket</span>
-          <h2 class="ds-section-title" id="menu-heading">Pilih kategori yang sesuai tujuanmu</h2>
-          <p class="ds-section-sub">Dua kategori dengan komposisi makro seimbang, diolah dari bahan segar lokal pilihan.</p>
-        </div>
+<!-- ============ PROMO ============ -->
+<section>
+  <div class="promo">
+    <div class="promo-icon">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="8" width="18" height="4" rx="1" stroke="#fff" stroke-width="1.8"/>
+        <rect x="4" y="12" width="16" height="9" rx="1" stroke="#fff" stroke-width="1.8"/>
+        <path d="M12 8v13M12 8c-1.5-3-6-3.5-6-1s2.5 1 6 1zM12 8c1.5-3 6-3.5 6-1s-2.5 1-6 1z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="eyebrow" style="background:rgba(255,255,255,.15);color:#fff;">🎉 Promo Soft Launching</span>
+    <h2>Promo Spesial Untuk<br>100 Pendaftar Pertama*</h2>
+    <p>Free Re.juve 2×250ml senilai Rp100.000</p>
+    <a href="#form" class="btn btn-coral">Redeem Promo</a>
+    <p class="promo-tnc">*S&amp;K: Selama persediaan masih ada<br>Varian rasa akan diberikan secara random</p>
+  </div>
+</section>
 
-        <div class="cat-grid">
-
-          <!-- Category A: Fit Shape -->
-          <div class="cat-card cat-card--shape ds-reveal">
-            <div class="cat-card-top">
-              <div class="cat-badge cat-badge--shape">Fit Shape</div>
-              <h3 class="cat-name">Nusantara Low-Calorie</h3>
-              <p class="cat-goal">Menjaga &amp; menurunkan berat badan dengan menu rendah kalori bergaya Nusantara.</p>
-              <div class="cat-kcal">
-                <span class="kcal-num">350–450</span>
-                <span class="kcal-unit">kcal</span>
-              </div>
-            </div>
-
-            <div class="macro-bar-wrap">
-              <div class="macro-bar">
-                <div class="macro-seg macro-seg--fiber"  style="width:50%" title="Fiber 50%"></div>
-                <div class="macro-seg macro-seg--carb"   style="width:25%" title="Carbs 25%"></div>
-                <div class="macro-seg macro-seg--protein"style="width:25%" title="Protein 25%"></div>
-              </div>
-              <div class="macro-legend">
-                <span class="ml ml--fiber">50% Serat</span>
-                <span class="ml ml--carb">25% Karbo</span>
-                <span class="ml ml--protein">25% Protein</span>
-              </div>
-            </div>
-
-            <div class="menu-list-wrap">
-              <p class="menu-list-label">Contoh Menu Harian</p>
-              <ul class="menu-list">
-                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Ayam bakar sambal matah, nasi merah &amp; tumis sayur</li>
-                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Pepes ikan dengan nasi jagung &amp; sayur asem</li>
-                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Ayam woku rendah minyak, nasi putih takar &amp; tumis buncis</li>
-                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Daging lada hitam rendah gula, nasi merah &amp; brokoli</li>
-                <li><span class="menu-bullet" aria-hidden="true">🍽</span>Bacem tahu &amp; tempe rendah gula dengan telur &amp; sayuran</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Category B: Fit Glow -->
-          <div class="cat-card cat-card--glow ds-reveal">
-            <div class="cat-card-top">
-              <div class="cat-badge cat-badge--glow">Fit Glow</div>
-              <h3 class="cat-name">Nourishing Indonesian Flavors</h3>
-              <p class="cat-goal">Nutrisi pilihan untuk mendukung kulit sehat &amp; bercahaya dari dalam.</p>
-              <div class="cat-kcal">
-                <span class="kcal-num">350–450</span>
-                <span class="kcal-unit">kcal</span>
-              </div>
-            </div>
-
-            <div class="macro-bar-wrap">
-              <div class="macro-bar">
-                <div class="macro-seg macro-seg--fiber"  style="width:50%"></div>
-                <div class="macro-seg macro-seg--carb"   style="width:25%"></div>
-                <div class="macro-seg macro-seg--protein"style="width:25%"></div>
-              </div>
-              <div class="macro-legend">
-                <span class="ml ml--fiber">50% Serat</span>
-                <span class="ml ml--carb">25% Karbo</span>
-                <span class="ml ml--protein">25% Protein</span>
-              </div>
-            </div>
-
-            <div class="menu-list-wrap">
-              <p class="menu-list-label">Contoh Menu Harian</p>
-              <ul class="menu-list">
-                <li><span class="menu-bullet" aria-hidden="true">✨</span>Salmon sambal matah, nasi merah &amp; tumis wortel brokoli</li>
-                <li><span class="menu-bullet" aria-hidden="true">✨</span>Ayam woku, nasi jagung &amp; tumis buncis paprika</li>
-                <li><span class="menu-bullet" aria-hidden="true">✨</span>Pepes tuna, nasi merah &amp; sayur asem</li>
-                <li><span class="menu-bullet" aria-hidden="true">✨</span>Dory bakar, ubi panggang &amp; tumis bayam</li>
-                <li><span class="menu-bullet" aria-hidden="true">✨</span>Bacem tahu &amp; tempe, nasi merah &amp; tumis pakcoy wortel</li>
-              </ul>
-            </div>
-          </div>
-
-        </div><!-- /cat-grid -->
-      </div>
-    </section>
-
-    <!-- ── 2. PRICING ── -->
-    <section class="ds-section ds-section--tinted" id="pricing" aria-labelledby="pricing-heading">
-      <div class="ds-container">
-        <div class="ds-section-header">
-          <span class="ds-tag ds-tag--orange">💳 Paket Langganan</span>
-          <h2 class="ds-section-title" id="pricing-heading">Harga transparan, tanpa biaya tersembunyi</h2>
-          <p class="ds-section-sub">Semua paket berlaku per minggu, dapat dikombinasikan dengan kedua kategori menu.</p>
-        </div>
-
-        <div class="pricing-grid">
-
-          <!-- Plan 1 -->
-          <div class="pr-card ds-reveal">
-            <div class="pr-card-top">
-              <span class="pr-plan-icon" aria-hidden="true">🥡</span>
-              <h3 class="pr-plan-name">Paket Lite</h3>
-              <p class="pr-plan-tagline">Mulai perjalanan sehat kamu</p>
-            </div>
-            <div class="pr-price-wrap">
-              <span class="pr-currency">Rp</span>
-              <span class="pr-amount">175.000</span>
-              <span class="pr-period">/ minggu</span>
-            </div>
-            <p class="pr-meals">1x makan / hari · 7 hari</p>
-            <ul class="pr-features">
-              <li><span class="pr-check" aria-hidden="true">✓</span> 7 porsi makan utama</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
-              <li class="pr-feat-muted"><span aria-hidden="true">—</span> Snack tidak termasuk</li>
-              <li class="pr-feat-muted"><span aria-hidden="true">—</span> Pengiriman 1x / hari</li>
-            </ul>
-            <a href="#detail" class="pr-btn pr-btn--outline">Pilih Paket</a>
-          </div>
-
-          <!-- Plan 2 — Featured -->
-          <div class="pr-card pr-card--featured ds-reveal">
-            <div class="pr-badge-best">Paling Populer ⭐</div>
-            <div class="pr-card-top">
-              <span class="pr-plan-icon" aria-hidden="true">🍱</span>
-              <h3 class="pr-plan-name">Paket Balance</h3>
-              <p class="pr-plan-tagline">Lengkap untuk pagi &amp; siang hari</p>
-            </div>
-            <div class="pr-price-wrap">
-              <span class="pr-currency">Rp</span>
-              <span class="pr-amount">310.000</span>
-              <span class="pr-period">/ minggu</span>
-            </div>
-            <p class="pr-meals">2x makan / hari · 7 hari</p>
-            <ul class="pr-features">
-              <li><span class="pr-check" aria-hidden="true">✓</span> 14 porsi makan utama</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Add-on snack tersedia</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Pengiriman 2x / hari</li>
-            </ul>
-            <a href="#detail" class="pr-btn pr-btn--solid">Pilih Paket</a>
-          </div>
-
-          <!-- Plan 3 -->
-          <div class="pr-card ds-reveal">
-            <div class="pr-card-top">
-              <span class="pr-plan-icon" aria-hidden="true">🌟</span>
-              <h3 class="pr-plan-name">Paket Full Day</h3>
-              <p class="pr-plan-tagline">Nutrisi lengkap sepanjang hari</p>
-            </div>
-            <div class="pr-price-wrap">
-              <span class="pr-currency">Rp</span>
-              <span class="pr-amount">450.000</span>
-              <span class="pr-period">/ minggu</span>
-            </div>
-            <p class="pr-meals">3x makan + 2 snack / hari · 7 hari</p>
-            <ul class="pr-features">
-              <li><span class="pr-check" aria-hidden="true">✓</span> 21 porsi makan utama</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Menu berganti setiap hari</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Pilihan Fit Shape / Fit Glow</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> 14 snack sehat sudah termasuk</li>
-              <li><span class="pr-check" aria-hidden="true">✓</span> Pengiriman 3x / hari</li>
-            </ul>
-            <a href="#detail" class="pr-btn pr-btn--outline">Pilih Paket</a>
-          </div>
-
-        </div><!-- /pricing-grid -->
-
-        <p class="pricing-note">
-          <span aria-hidden="true">🏠</span>
-          Diskon khusus untuk pembelian minimal 2 paket yang dikirim ke alamat yang sama.
-          <a href="#faq">Pelajari lebih lanjut →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- ── 3. TERMS & CONDITIONS ── -->
-    <section class="ds-section" id="tnc" aria-labelledby="tnc-heading">
-      <div class="ds-container">
-        <div class="ds-section-header">
-          <span class="ds-tag ds-tag--green">📋 Syarat &amp; Ketentuan</span>
-          <h2 class="ds-section-title" id="tnc-heading">Yang perlu kamu tahu</h2>
-          <p class="ds-section-sub">Transparan dari awal, supaya kamu bisa memesan dengan tenang.</p>
-        </div>
-
-        <div class="tnc-grid">
-          <div class="tnc-card ds-reveal">
-            <div class="tnc-icon-wrap tnc-icon--green" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <h4 class="tnc-title">Menu Berganti Setiap Hari</h4>
-            <p class="tnc-body">Kamu tidak akan mendapatkan menu yang sama dua hari berturut-turut. Variasi menu dirancang untuk memastikan asupan nutrisi yang beragam setiap harinya.</p>
-          </div>
-
-          <div class="tnc-card ds-reveal">
-            <div class="tnc-icon-wrap tnc-icon--orange" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </div>
-            <h4 class="tnc-title">Snack Tersedia sebagai Add-on</h4>
-            <p class="tnc-body">Paket Lite &amp; Balance tidak menyertakan snack secara default. Kamu dapat menambahkan snack sehat sebagai add-on dengan biaya tambahan saat memesan.</p>
-          </div>
-
-          <div class="tnc-card ds-reveal">
-            <div class="tnc-icon-wrap tnc-icon--green" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <h4 class="tnc-title">Minimum Pemesanan 1 Minggu</h4>
-            <p class="tnc-body">Setiap paket berlaku untuk durasi minimal 1 minggu (7 hari). Konsistensi adalah kunci untuk mencapai tujuan kesehatanmu bersama Porsifit.</p>
-          </div>
-
-          <div class="tnc-card ds-reveal">
-            <div class="tnc-icon-wrap tnc-icon--orange" aria-hidden="true">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <h4 class="tnc-title">Diskon untuk Pemesanan Bersama</h4>
-            <p class="tnc-body">Dapatkan harga spesial jika kamu memesan minimal 2 paket yang dikirimkan ke alamat yang sama — cocok untuk kamu dan rekan kantor, atau keluarga di rumah.</p>
-          </div>
+<!-- ============ PRICE LIST ============ -->
+<section id="pricelist">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">Price List</span>
+      <h2>Transparan sejak awal</h2>
+      <p>Nggak ada biaya tersembunyi, tinggal pilih paket dan frekuensi makan yang sesuai kebutuhanmu.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card shape">
+        <h3>PorsiFit Shape</h3>
+        <p class="price-start">Mulai dari <strong>Rp59.000</strong>/meal</p>
+        <div class="price-rows">
+          <div class="price-row"><span>1 meal / day</span><strong>Rp59.000</strong></div>
+          <div class="price-row"><span>2 meal / day</span><strong>Rp109.000</strong></div>
+          <div class="price-row"><span>3 meal + 2 snacks / day</span><strong>Rp189.000</strong></div>
         </div>
       </div>
-    </section>
-
-    <!-- ── 4. FAQ ── -->
-    <section class="ds-section ds-section--tinted" id="faq" aria-labelledby="faq-heading">
-      <div class="ds-container ds-container--narrow">
-        <div class="ds-section-header">
-          <span class="ds-tag ds-tag--green">❓ FAQ</span>
-          <h2 class="ds-section-title" id="faq-heading">Pertanyaan yang sering ditanyakan</h2>
-          <p class="ds-section-sub">Tidak menemukan jawaban? Hubungi kami lewat DM Instagram.</p>
-        </div>
-
-        <div class="faq-list" role="list">
-
-          <div class="faq-item ds-reveal" role="listitem">
-            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-1">
-              <span>Apakah ada minimum pemesanan?</span>
-              <span class="faq-chevron" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </span>
-            </button>
-            <div class="faq-answer" id="faq-ans-1" hidden>
-              <p>Ya. Minimum pemesanan adalah <strong>1 paket untuk 1 minggu</strong> (7 hari pengiriman). Kami tidak melayani pemesanan harian satuan agar kamu bisa merasakan manfaat pola makan konsisten dari program Porsifit.</p>
-            </div>
-          </div>
-
-          <div class="faq-item ds-reveal" role="listitem">
-            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-2">
-              <span>Apakah saya bisa menambah snack ke paket saya?</span>
-              <span class="faq-chevron" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </span>
-            </button>
-            <div class="faq-answer" id="faq-ans-2" hidden>
-              <p>Tentu! Snack sehat tersedia sebagai <strong>add-on</strong> untuk Paket Lite dan Paket Balance. Kamu bisa menambahkannya langsung saat proses pemesanan. Paket Full Day sudah menyertakan 2 snack per hari secara otomatis.</p>
-            </div>
-          </div>
-
-          <div class="faq-item ds-reveal" role="listitem">
-            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-3">
-              <span>Bagaimana cara mendapatkan diskon paket bersama?</span>
-              <span class="faq-chevron" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </span>
-            </button>
-            <div class="faq-answer" id="faq-ans-3" hidden>
-              <p>Diskon berlaku secara otomatis jika kamu memesan <strong>minimal 2 paket</strong> (untuk 2 orang atau lebih) dengan satu alamat pengiriman yang sama. Cocok untuk kamu dan rekan kantor, pasangan, atau anggota keluarga. Nominal diskon akan tampil pada halaman checkout.</p>
-            </div>
-          </div>
-
-          <div class="faq-item ds-reveal" role="listitem">
-            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-4">
-              <span>Apakah menu bisa disesuaikan dengan pantangan makanan saya?</span>
-              <span class="faq-chevron" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </span>
-            </button>
-            <div class="faq-answer" id="faq-ans-4" hidden>
-              <p>Saat ini kami menyediakan menu standar yang sudah bebas MSG dan pengawet. Untuk alergi atau pantangan spesifik (misalnya alergi seafood atau bebas gluten), silakan hubungi tim kami via DM sebelum memesan agar kami bisa memberikan saran terbaik.</p>
-            </div>
-          </div>
-
-          <div class="faq-item ds-reveal" role="listitem">
-            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-ans-5">
-              <span>Jam berapa makanan akan dikirimkan?</span>
-              <span class="faq-chevron" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-              </span>
-            </button>
-            <div class="faq-answer" id="faq-ans-5" hidden>
-              <p>Pengiriman dilakukan sesuai jumlah makan di paketmu: makan pagi diantar pukul <strong>06.30–07.30</strong>, makan siang pukul <strong>11.00–12.00</strong>, dan makan malam pukul <strong>17.00–18.00</strong> (khusus Paket Full Day). Kamu akan menerima notifikasi WhatsApp setiap kali pesanan dalam perjalanan.</p>
-            </div>
-          </div>
-
-        </div><!-- /faq-list -->
-      </div>
-    </section>
-
-    <!-- ── BOTTOM CTA ── -->
-    <div class="ds-bottom-cta">
-      <div class="ds-container">
-        <div class="ds-cta-inner">
-          <div class="ds-cta-copy">
-            <h3>Siap mulai perjalanan sehatmu?</h3>
-            <p>Daftar pre-launch sekarang dan dapatkan penawaran eksklusif untuk pendaftar pertama.</p>
-          </div>
-          <a href="#form" class="ds-cta-btn">
-            Daftar Pre-Launch
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
+      <div class="price-card glow">
+        <h3>PorsiFit Glow</h3>
+        <p class="price-start">Mulai dari <strong>Rp69.000</strong>/meal</p>
+        <div class="price-rows">
+          <div class="price-row"><span>1 meal / day</span><strong>Rp69.000</strong></div>
+          <div class="price-row"><span>2 meal / day</span><strong>Rp138.000</strong></div>
+          <div class="price-row"><span>3 meal + 2 snacks / day</span><strong>Rp207.000</strong></div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-  </div><!-- /detail-section -->
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">FAQ</span>
+      <h2>Pertanyaan yang sering ditanya</h2>
+      <p>Belum ketemu jawabannya? Chat admin kami lewat form di bawah.</p>
+    </div>
+    <div class="faq-list">
+      <details open>
+        <summary>Kapan estimasi paket tiba? <span class="plus">+</span></summary>
+        <p>Untuk makan siang, estimasi tiba pukul 12.00–12.30 WIB. Untuk makan malam, estimasi tiba mulai pukul 18.00 dan paling lambat pukul 18.30 WIB.</p>
+      </details>
+      <details>
+        <summary>Bagaimana cara memesan? <span class="plus">+</span></summary>
+        <p>Isi form pendaftaran prelaunch di bawah, admin kami akan menghubungi via Instagram atau WhatsApp untuk konfirmasi paket dan jadwal antar.</p>
+      </details>
+      <details>
+        <summary>Apakah ada menu tambahan (add on)? <span class="plus">+</span></summary>
+        <p>Ada, seperti snack sehat dan minuman pendamping. Tanyakan pilihan add on yang tersedia ke admin kami.</p>
+      </details>
+      <details>
+        <summary>Apa ada special request? <span class="plus">+</span></summary>
+        <p>Iya, untuk permintaan tertentu bisa langsung disampaikan ke admin kami.</p>
+      </details>
+      <details>
+        <summary>Apakah masak menggunakan minyak? <span class="plus">+</span></summary>
+        <p>Iya, minyak yang kami gunakan adalah coconut oil. Untuk yang tidak suka minyak, bisa request ke admin.</p>
+      </details>
+      <details>
+        <summary>Apa menunya halal? <span class="plus">+</span></summary>
+        <p>Iya, semua menu yang kami sajikan halal.</p>
+      </details>
+      <details>
+        <summary>Apakah aman untuk penderita GERD? <span class="plus">+</span></summary>
+        <p>Untuk penderita GERD, disarankan konsultasi dulu ke admin kami sebelum berlangganan.</p>
+      </details>
+    </div>
+  </div>
+</section>
 
-  <script src="main.js"></script>
+<!-- ============ CLOSING QUOTE ============ -->
+<section style="padding-bottom:0;">
+  <div class="quote-section">
+    <div class="quote-mark">&ldquo;</div>
+    <h2>Makan sehat gak harus menyiksa. 😊</h2>
+    <p class="quote-sub">Hidup sehat itu seharusnya terasa ringan, menyenangkan, dan tetap nikmat di setiap suapan.</p>
+    <a href="#form" class="btn btn-primary" style="background:#fff;color:var(--coral-deep);">Gabung Prelaunch Sekarang</a>
+  </div>
+</section>
+
+<!-- ============ FORM ============ -->
+<section class="form-section" id="form">
+  <div class="wrap">
+    <div class="form-card">
+      <div id="formDefault">
+        <span class="eyebrow">Prelaunch</span>
+        <h2>Gabung Prelaunch PorsiFit</h2>
+        <p class="lead">Isi data singkat ini, admin kami akan hubungi kamu untuk konsultasi menu dan harga spesial.</p>
+        <form id="prelaunchForm" onsubmit="return handleSubmit(event)">
+          <div class="field">
+            <label for="nama">Nama lengkap</label>
+            <input type="text" id="nama" placeholder="Nama kamu" required>
+          </div>
+          <div class="field">
+            <label for="ig">Username Instagram</label>
+            <input type="text" id="ig" placeholder="@username" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Gabung Prelaunch Sekarang</button>
+        </form>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <svg viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="26" fill="#BBDF81"/><path d="M15 27l7 7 15-15" stroke="#5C7A5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Terima kasih sudah daftar!</h3>
+        <p>Admin PorsiFit akan menghubungi Instagram kamu dalam 1x24 jam untuk konsultasi menu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="logo">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <circle cx="17" cy="17" r="17" fill="#BBDF81"/>
+          <path d="M12 9v7.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8V9M13.8 9v16M20.5 9c-1.3 0-2.3 1.6-2.3 4.5S19.2 18 20.5 18s2.3-2.1 2.3-4.5S21.8 9 20.5 9zM20.5 18v7" stroke="#F8F0DE" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-word"><span class="p1">Porsi</span><span class="p2">Fit</span></div>
+      </div>
+      <p class="footer-desc">Healthy Nusantara catering untuk kamu yang sibuk — tinggal makan, gizi sudah dihitung.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#F8F0DE" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="#F8F0DE" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="#F8F0DE"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 3v11.5a3.5 3.5 0 1 1-3-3.46" stroke="#F8F0DE" stroke-width="1.6" stroke-linecap="round"/><path d="M14 3c.3 2.4 2 4.2 4.4 4.5" stroke="#F8F0DE" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 20l1.4-4A8 8 0 1 1 9 18.6L4 20z" stroke="#F8F0DE" stroke-width="1.6" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Navigasi</h5>
+        <a href="#paket">Paket</a>
+        <a href="#kenapa">Kenapa PorsiFit</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h5>Bantuan</h5>
+        <a href="#form">Konsultasi</a>
+        <a href="#" onclick="openModal('modalTnc');return false;">Syarat &amp; Ketentuan</a>
+        <a href="#" onclick="openModal('modalPrivacy');return false;">Kebijakan Privasi</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PorsiFit. All rights reserved.</span>
+    <span>Healthy Nusantara Catering</span>
+  </div>
+</footer>
+
+<!-- ============ POPUP MODAL (welcome) ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalOverlay')">✕</button>
+    <div class="modal-head">
+      <span class="eyebrow">✨ Prelaunch PorsiFit</span>
+      <h2>Kenalan dulu sama menu andalan kami</h2>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-pkg shape">
+        <h4>PorsiFit Shape</h4>
+        <p>Untuk tubuh ideal — rendah kalori, tinggi protein.</p>
+        <div class="pkg-macros">
+          <span class="macro">390 kcal</span>
+          <span class="macro">Protein 35g</span>
+        </div>
+      </div>
+      <div class="modal-pkg glow">
+        <h4>PorsiFit Glow</h4>
+        <p>Untuk kulit sehat bercahaya — kaya antioksidan.</p>
+        <div class="pkg-macros">
+          <span class="macro">420 kcal</span>
+          <span class="macro">Protein 32g</span>
+        </div>
+      </div>
+    </div>
+    <a href="#form" class="btn btn-primary" onclick="closeModal('modalOverlay')">Konsultasi Sekarang</a>
+  </div>
+</div>
+
+<!-- ============ MODAL: SYARAT & KETENTUAN ============ -->
+<div class="modal-overlay" id="modalTnc">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalTnc')">✕</button>
+    <div class="modal-head" style="text-align:left;margin-bottom:8px;">
+      <h2>Syarat &amp; Ketentuan</h2>
+    </div>
+    <div class="legal-doc">
+      <span class="updated">Terakhir diperbarui: Juli 2026</span>
+      <p>Dengan mendaftar atau menggunakan layanan PorsiFit, kamu dianggap telah membaca, memahami, dan menyetujui syarat &amp; ketentuan berikut.</p>
+
+      <h4>1. Tentang Layanan</h4>
+      <p>PorsiFit adalah layanan katering makanan sehat harian dengan konsep porsi dan gizi terukur. Layanan ini masih dalam masa prelaunch/soft launching dan dapat mengalami penyesuaian menu, harga, maupun area layanan.</p>
+
+      <h4>2. Pemesanan &amp; Pembayaran</h4>
+      <ul>
+        <li>Pemesanan dilakukan melalui form pendaftaran atau admin resmi PorsiFit (WhatsApp/Instagram).</li>
+        <li>Pembayaran dilakukan di muka (advance payment) sesuai paket dan durasi berlangganan yang dipilih.</li>
+        <li>Konfirmasi pesanan berlaku setelah pembayaran diterima dan diverifikasi oleh admin.</li>
+      </ul>
+
+      <h4>3. Pengiriman</h4>
+      <ul>
+        <li>Estimasi pengantaran mengikuti jadwal yang tertera pada halaman FAQ dan dapat berubah karena kondisi di luar kendali kami (cuaca, lalu lintas, dsb).</li>
+        <li>Pelanggan wajib memastikan alamat dan nomor kontak yang diberikan aktif dan dapat dijangkau kurir.</li>
+      </ul>
+
+      <h4>4. Perubahan &amp; Pembatalan</h4>
+      <ul>
+        <li>Perubahan menu atau permintaan khusus (special request) dapat diajukan maksimal 1x24 jam sebelum jadwal pengantaran, tergantung ketersediaan bahan.</li>
+        <li>Pembatalan langganan mengikuti kebijakan refund yang berlaku dan akan diinformasikan oleh admin saat pemesanan.</li>
+      </ul>
+
+      <h4>5. Tanggung Jawab</h4>
+      <p>PorsiFit berupaya menjaga kualitas dan keamanan pangan pada setiap proses produksi. Namun, pelanggan dengan kondisi kesehatan atau alergi tertentu (termasuk GERD) disarankan berkonsultasi dengan admin sebelum berlangganan.</p>
+
+      <h4>6. Perubahan Ketentuan</h4>
+      <p>PorsiFit berhak mengubah syarat &amp; ketentuan ini sewaktu-waktu. Perubahan akan diinformasikan melalui kanal resmi PorsiFit.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: KEBIJAKAN PRIVASI ============ -->
+<div class="modal-overlay" id="modalPrivacy">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalPrivacy')">✕</button>
+    <div class="modal-head" style="text-align:left;margin-bottom:8px;">
+      <h2>Kebijakan Privasi</h2>
+    </div>
+    <div class="legal-doc">
+      <span class="updated">Terakhir diperbarui: Juli 2026</span>
+      <p>PorsiFit menghargai privasi setiap pelanggan dan calon pelanggan. Kebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadimu.</p>
+
+      <h4>1. Data yang Kami Kumpulkan</h4>
+      <ul>
+        <li>Nama lengkap dan username Instagram yang kamu berikan melalui form pendaftaran.</li>
+        <li>Data komunikasi seperti nomor WhatsApp dan alamat pengantaran saat proses konfirmasi pesanan.</li>
+        <li>Preferensi menu, alergi, atau permintaan khusus yang kamu sampaikan ke admin.</li>
+      </ul>
+
+      <h4>2. Penggunaan Data</h4>
+      <ul>
+        <li>Menghubungi kamu untuk konsultasi menu, konfirmasi pesanan, dan informasi promo prelaunch.</li>
+        <li>Memproses dan mengantarkan pesanan sesuai paket yang dipilih.</li>
+        <li>Meningkatkan kualitas menu dan layanan berdasarkan masukan pelanggan.</li>
+      </ul>
+
+      <h4>3. Penyimpanan &amp; Keamanan Data</h4>
+      <p>Data pribadimu disimpan secara terbatas oleh tim internal PorsiFit dan tidak dibagikan ke pihak ketiga untuk kepentingan komersial tanpa izin, kecuali diwajibkan oleh hukum yang berlaku.</p>
+
+      <h4>4. Hak Kamu</h4>
+      <ul>
+        <li>Meminta informasi data apa saja yang kami simpan tentang kamu.</li>
+        <li>Meminta koreksi data yang tidak akurat.</li>
+        <li>Meminta penghapusan data jika kamu tidak lagi menggunakan layanan PorsiFit.</li>
+      </ul>
+
+      <h4>5. Perubahan Kebijakan</h4>
+      <p>Kebijakan privasi ini dapat diperbarui sewaktu-waktu mengikuti perkembangan layanan PorsiFit. Perubahan signifikan akan diinformasikan melalui kanal resmi kami.</p>
+
+      <h4>6. Kontak</h4>
+      <p>Ada pertanyaan soal data pribadimu? Hubungi admin PorsiFit melalui Instagram atau WhatsApp resmi yang tercantum di halaman ini.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeModal(id){
+    document.getElementById(id).classList.remove('open');
+  }
+  function openModal(id){
+    document.getElementById(id).classList.add('open');
+  }
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.getElementById('modalOverlay').classList.add('open');
+    }, 1200);
+  });
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+    overlay.addEventListener('click', function(e){
+      if(e.target === this) closeModal(this.id);
+    });
+  });
+
+  function handleSubmit(e){
+    e.preventDefault();
+    document.getElementById('formDefault').style.display='none';
+    var s = document.getElementById('formSuccess');
+    s.style.display='flex';
+    return false;
+  }
+</script>
+
 </body>
 </html>
