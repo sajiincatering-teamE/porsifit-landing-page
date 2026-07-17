@@ -362,6 +362,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeTy() {
     overlay.classList.remove('is-open');
     document.body.style.overflow = '';
+
+    // Replace form with success state so user sees confirmation
+    const formDefault  = document.getElementById('form-default');
+    const formSuccess  = document.getElementById('form-success');
+    const successIgEl  = document.getElementById('success-ig-name');
+    const tyIgEl       = document.getElementById('ty-ig-name');
+
+    // Copy the IG name from popup to inline success message
+    if (successIgEl && tyIgEl) {
+      successIgEl.textContent = tyIgEl.textContent;
+    }
+
+    if (formDefault) formDefault.hidden = true;
+    if (formSuccess) formSuccess.hidden = false;
+
+    // Scroll form section into view
+    const formSection = document.getElementById('form');
+    if (formSection) formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   if (closeBtn) closeBtn.addEventListener('click', closeTy);
