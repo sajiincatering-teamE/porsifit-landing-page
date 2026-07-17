@@ -101,8 +101,7 @@ if (form) {
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
 
-    // ── Replace this URL with your own Web App URL ──
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg5OPDRD0OxIQ24Wj1GIrAq-vC73ENGlq7JZsmxsJYg18mDO0_RlrUM43mqr33XVfCxA/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxq34f64RuFqPA1Zhsm6WWEJHeaW2ifVluVo2QjadxES4vyZwhDoFw10vgglDO8eAShdw/exec';
     const payload = {
       nama: nameInput.value.trim(),
       instagram: igInput.value.trim().replace(/^@/, ''),
@@ -122,8 +121,8 @@ if (form) {
         // here as success (the POST was sent).
         const igVal = payload.instagram;
         document.getElementById('success-ig-name').textContent = '@' + igVal;
-        form.hidden   = true;
-        successBox.hidden = false;   // ← fix: was incorrectly named formSuccess
+        document.getElementById('form-default').hidden = true;
+        document.getElementById('form-success').hidden  = false;
       })
       .catch(() => {
         submitBtn.classList.remove('loading');

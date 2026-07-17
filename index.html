@@ -787,26 +787,28 @@
 <section class="form-section" id="form">
   <div class="wrap">
     <div class="form-card">
-      <div id="formDefault">
+      <div id="form-default">
         <span class="eyebrow">Prelaunch</span>
         <h2>Gabung Prelaunch PorsiFit</h2>
         <p class="lead">Isi data singkat ini, admin kami akan hubungi kamu untuk konsultasi menu dan harga spesial.</p>
-        <form id="prelaunchForm" onsubmit="return handleSubmit(event)">
+        <form id="signup-form">
           <div class="field">
-            <label for="nama">Nama lengkap</label>
-            <input type="text" id="nama" placeholder="Nama kamu" required>
+            <label for="full-name">Nama lengkap</label>
+            <input type="text" id="full-name" placeholder="Nama kamu" required>
+            <span id="name-error" style="color:#C97D77;font-size:12px;display:block;margin-top:4px;"></span>
           </div>
           <div class="field">
-            <label for="ig">Username Instagram</label>
-            <input type="text" id="ig" placeholder="@username" required>
+            <label for="instagram">Username Instagram</label>
+            <input type="text" id="instagram" placeholder="@username" required>
+            <span id="ig-error" style="color:#C97D77;font-size:12px;display:block;margin-top:4px;"></span>
           </div>
-          <button type="submit" class="btn btn-primary">Gabung Prelaunch Sekarang</button>
+          <button type="submit" id="submit-btn" class="btn btn-primary">Gabung Prelaunch Sekarang</button>
         </form>
       </div>
-      <div class="form-success" id="formSuccess">
+      <div class="form-success" id="form-success" hidden>
         <svg viewBox="0 0 52 52" fill="none"><circle cx="26" cy="26" r="26" fill="#BBDF81"/><path d="M15 27l7 7 15-15" stroke="#5C7A5B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <h3>Terima kasih sudah daftar!</h3>
-        <p>Admin PorsiFit akan menghubungi Instagram kamu dalam 1x24 jam untuk konsultasi menu.</p>
+        <p>Admin PorsiFit akan menghubungi Instagram <strong id="success-ig-name"></strong> dalam 1x24 jam untuk konsultasi menu.</p>
       </div>
     </div>
   </div>
@@ -984,15 +986,8 @@
       if(e.target === this) closeModal(this.id);
     });
   });
-
-  function handleSubmit(e){
-    e.preventDefault();
-    document.getElementById('formDefault').style.display='none';
-    var s = document.getElementById('formSuccess');
-    s.style.display='flex';
-    return false;
-  }
 </script>
 
+<script src="main.js" defer></script>
 </body>
 </html>
