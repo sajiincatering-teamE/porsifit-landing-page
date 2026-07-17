@@ -120,9 +120,19 @@ if (form) {
         // With no-cors we always get an opaque response — treat reaching
         // here as success (the POST was sent).
         const igVal = payload.instagram;
-        document.getElementById('success-ig-name').textContent = '@' + igVal;
-        document.getElementById('form-default').hidden = true;
-        document.getElementById('form-success').hidden  = false;
+
+        // Show thank-you popup
+        const tyOverlay = document.getElementById('ty-overlay');
+        const tyIgName  = document.getElementById('ty-ig-name');
+        if (tyIgName)  tyIgName.textContent  = '@' + igVal;
+        if (tyOverlay) {
+          tyOverlay.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        }
+
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
       })
       .catch(() => {
         submitBtn.classList.remove('loading');
@@ -339,5 +349,31 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       first.focus();
     }
+  });
+})();
+
+// ── Thank You Popup ─────────────────────────────────────────
+(function initTyPopup() {
+  const overlay  = document.getElementById('ty-overlay');
+  const closeBtn = document.getElementById('ty-close-btn');
+  const closeX   = document.getElementById('ty-close-x');
+  if (!overlay) return;
+
+  function closeTy() {
+    overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeTy);
+  if (closeX)   closeX.addEventListener('click',   closeTy);
+
+  // Close on backdrop click
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeTy();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeTy();
   });
 })();

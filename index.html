@@ -460,6 +460,123 @@
     font-size:12px;color:var(--ink-soft);opacity:.7;margin-bottom:20px;display:block;
   }
 
+  /* ---------- Thank You Popup ---------- */
+  .ty-overlay{
+    position:fixed;inset:0;z-index:300;
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    background:rgba(58,46,40,0);
+    backdrop-filter:blur(0px);
+    pointer-events:none;
+    transition:background .4s ease, backdrop-filter .4s ease;
+  }
+  .ty-overlay.is-open{
+    background:rgba(58,46,40,.55);
+    backdrop-filter:blur(6px);
+    pointer-events:all;
+  }
+  .ty-card{
+    position:relative;
+    background:var(--cream-soft);
+    border-radius:32px;
+    max-width:460px;width:100%;
+    padding:48px 40px 40px;
+    text-align:center;
+    box-shadow:0 24px 64px rgba(58,46,40,.18);
+    overflow:hidden;
+    transform:scale(.88) translateY(24px);
+    opacity:0;
+    transition:transform .45s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
+  }
+  .ty-overlay.is-open .ty-card{
+    transform:scale(1) translateY(0);
+    opacity:1;
+  }
+  /* decorative blobs */
+  .ty-card::before{
+    content:'';position:absolute;width:220px;height:220px;border-radius:50%;
+    background:var(--green);opacity:.18;
+    top:-80px;right:-60px;pointer-events:none;
+  }
+  .ty-card::after{
+    content:'';position:absolute;width:160px;height:160px;border-radius:50%;
+    background:var(--coral);opacity:.2;
+    bottom:-60px;left:-40px;pointer-events:none;
+  }
+  .ty-icon-wrap{
+    position:relative;z-index:1;
+    width:88px;height:88px;margin:0 auto 24px;
+  }
+  .ty-icon-wrap svg.ty-circle{
+    position:absolute;inset:0;width:100%;height:100%;
+  }
+  .ty-checkmark{
+    stroke-dasharray:56;
+    stroke-dashoffset:56;
+    transition:stroke-dashoffset .6s ease .3s;
+  }
+  .ty-overlay.is-open .ty-checkmark{
+    stroke-dashoffset:0;
+  }
+  .ty-emoji{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:32px;line-height:1;
+  }
+  .ty-card h2{
+    font-family:'Baloo 2',sans-serif;
+    font-size:26px;color:var(--ink);
+    margin:0 0 10px;position:relative;z-index:1;
+    line-height:1.2;
+  }
+  .ty-card h2 .ty-accent{color:var(--coral-deep);}
+  .ty-tagline{
+    font-size:14.5px;color:var(--ink-soft);
+    margin:0 0 28px;position:relative;z-index:1;
+    line-height:1.6;
+  }
+  .ty-steps{
+    display:flex;flex-direction:column;gap:10px;
+    margin-bottom:28px;position:relative;z-index:1;
+    text-align:left;
+  }
+  .ty-step{
+    display:flex;align-items:center;gap:12px;
+    background:#fff;border-radius:14px;
+    padding:12px 16px;
+    font-size:13.5px;font-weight:600;color:var(--ink);
+  }
+  .ty-step-icon{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+  }
+  .ty-step-icon.green{background:rgba(187,223,129,.3);}
+  .ty-step-icon.coral{background:rgba(239,172,165,.3);}
+  .ty-step-icon.cream{background:var(--cream);}
+  .ty-ig{
+    font-size:12px;color:var(--ink-soft);
+    margin:0 0 24px;position:relative;z-index:1;
+  }
+  .ty-ig strong{color:var(--green-deep);}
+  .ty-close-btn{
+    position:relative;z-index:1;
+    width:100%;padding:16px;border-radius:999px;
+    background:var(--green-deep);color:var(--cream-soft);
+    font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;
+    border:none;cursor:pointer;
+    box-shadow:0 8px 20px rgba(92,122,91,.35);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .ty-close-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(92,122,91,.4);}
+  .ty-close-x{
+    position:absolute;top:16px;right:16px;z-index:2;
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(58,46,40,.07);border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:var(--ink-soft);
+    transition:background .15s ease;
+  }
+  .ty-close-x:hover{background:rgba(58,46,40,.13);}
+
   /* ---------- Responsive ---------- */
   @media (max-width:860px){
     .hero{padding:80px 18px 60px;}
@@ -987,6 +1104,45 @@
     });
   });
 </script>
+
+<!-- ============ THANK YOU POPUP ============ -->
+<div class="ty-overlay" id="ty-overlay" aria-modal="true" role="dialog" aria-labelledby="ty-heading">
+  <div class="ty-card">
+    <button class="ty-close-x" id="ty-close-x" aria-label="Tutup">✕</button>
+
+    <!-- Animated checkmark -->
+    <div class="ty-icon-wrap">
+      <svg class="ty-circle" viewBox="0 0 88 88" fill="none">
+        <circle cx="44" cy="44" r="40" fill="#BBDF81" opacity=".25"/>
+        <circle cx="44" cy="44" r="40" stroke="#5C7A5B" stroke-width="3" stroke-dasharray="251" stroke-dashoffset="0" opacity=".15"/>
+        <path class="ty-checkmark" d="M27 45l11 11 23-23" stroke="#5C7A5B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+      <div class="ty-emoji">🍱</div>
+    </div>
+
+    <h2 id="ty-heading">Terima kasih,<br><span class="ty-accent">tunggu perjalananmu</span><br>bersama PorsiFit!</h2>
+    <p class="ty-tagline">Kamu udah selangkah lebih dekat ke hidup sehat yang tetap enak.</p>
+
+    <div class="ty-steps">
+      <div class="ty-step">
+        <div class="ty-step-icon green">📲</div>
+        <span>Admin akan menghubungi kamu dalam 1×24 jam</span>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step-icon coral">🥗</div>
+        <span>Konsultasi menu & pilih paket yang cocok</span>
+      </div>
+      <div class="ty-step">
+        <div class="ty-step-icon cream">🚀</div>
+        <span>Mulai perjalanan sehatmu bersama PorsiFit!</span>
+      </div>
+    </div>
+
+    <p class="ty-ig">Kami akan hubungi <strong id="ty-ig-name">kamu</strong> via Instagram ya 💚</p>
+
+    <button class="ty-close-btn" id="ty-close-btn">Siap, Aku Tunggu! 🎉</button>
+  </div>
+</div>
 
 <script src="main.js" defer></script>
 </body>
