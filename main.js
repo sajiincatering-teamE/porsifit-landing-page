@@ -1,397 +1,415 @@
-/* ============================================================
-   Sajiin Catering — main.js
-   Features: Countdown timer, form validation, animations
-   ============================================================ */
+/* ==========================================================================
+   PorsiFit — main.js
+   Lead form + Google Sheets (Apps Script) + modal + FAQ + tracking GA4
+   ========================================================================== */
 
-// ── Launch countdown (target: 45 days from now) ────────────
-(function initCountdown() {
-  const LAUNCH = new Date();
-  LAUNCH.setDate(LAUNCH.getDate() + 45);
-  LAUNCH.setHours(0, 0, 0, 0);
+'use strict';
 
-  const els = {
-    days:  document.getElementById('cd-days'),
-    hours: document.getElementById('cd-hours'),
-    mins:  document.getElementById('cd-mins'),
-    secs:  document.getElementById('cd-secs'),
-  };
+/* Fallback kalau gtag belum termuat (adblock, koneksi lambat) */
+window.gtag = window.gtag || function () {};
 
-  function pad(n) { return String(n).padStart(2, '0'); }
+/* ── Konfigurasi ─────────────────────────────────────────── */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxq34f64RuFqPA1Zhsm6WWEJHeaW2ifVluVo2QjadxES4vyZwhDoFw10vgglDO8eAShdw/exec';
 
-  function tick() {
-    const diff = LAUNCH - Date.now();
-    if (diff <= 0) {
-      Object.values(els).forEach(el => { if (el) el.textContent = '00'; });
-      return;
+/* ── Welcome pop-up ──────────────────────────────────────────
+   NONAKTIF secara default. Ubah `enabled` jadi true kalau tim
+   memutuskan pop-up ini dipakai. Aturannya sengaja dibuat supaya
+   pop-up tidak pernah menutupi lead form di atas fold:
+     - baru muncul setelah pengunjung melewati hero
+     - plus jeda waktu, jadi tidak menyergap begitu halaman terbuka
+     - cuma sekali per sesi
+     - tidak muncul kalau pengunjung sudah mengisi form
+   ---------------------------------------------------------- */
+const WELCOME_POPUP = {
+  enabled: false,          // ← ubah ke true untuk mengaktifkan
+  delayMs: 9000,           // jeda sebelum boleh muncul
+  requireScrollPastHero: true,
+  oncePerSession: true,
+};
+
+/* ── Menu mobile ─────────────────────────────────────────── */
+(function initBurger() {
+  const burger = document.getElementById('burger');
+  const links  = document.getElementById('nav-links');
+  if (!burger || !links) return;
+
+  burger.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  links.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      links.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
     }
-    const days  = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins  = Math.floor((diff % 3600000)  / 60000);
-    const secs  = Math.floor((diff % 60000)    / 1000);
-
-    if (els.days)  els.days.textContent  = pad(days);
-    if (els.hours) els.hours.textContent = pad(hours);
-    if (els.mins)  els.mins.textContent  = pad(mins);
-    if (els.secs)  els.secs.textContent  = pad(secs);
-  }
-
-  tick();
-  setInterval(tick, 1000);
+  });
 })();
 
-// ── Form validation & submission ───────────────────────────
-const form       = document.getElementById('signup-form');
-const successBox = document.getElementById('form-success');
-const submitBtn  = document.getElementById('submit-btn');
+/* ── Tracking klik CTA ───────────────────────────────────── */
+document.querySelectorAll('.js-cta').forEach((el) => {
+  el.addEventListener('click', () => {
+    gtag('event', 'cta_click', { cta_location: el.dataset.cta || 'unknown' });
+  });
+});
 
-const nameInput = document.getElementById('full-name');
-const igInput   = document.getElementById('instagram');
-const nameError = document.getElementById('name-error');
-const igError   = document.getElementById('ig-error');
+/* ── Form waiting list ───────────────────────────────────── */
+(function initForm() {
+  const form       = document.getElementById('signup-form');
+  if (!form) return;
 
-function showErr(input, errEl, msg) {
-  input.classList.add('is-invalid');
-  input.classList.remove('is-valid');
-  errEl.textContent = msg;
-}
+  const submitBtn  = document.getElementById('submit-btn');
+  const nameInput  = document.getElementById('full-name');
+  const igInput    = document.getElementById('instagram');
+  const consent    = document.getElementById('consent');
+  const nameError  = document.getElementById('name-error');
+  const igError    = document.getElementById('ig-error');
+  const consentErr = document.getElementById('consent-error');
 
-function clearErr(input, errEl) {
-  input.classList.remove('is-invalid');
-  errEl.textContent = '';
-}
-
-function markValid(input) {
-  input.classList.remove('is-invalid');
-  input.classList.add('is-valid');
-}
-
-// Live clear on input
-nameInput.addEventListener('input', () => clearErr(nameInput, nameError));
-igInput.addEventListener('input',   () => clearErr(igInput, igError));
-
-// Validate
-function validate() {
-  let ok = true;
-  const name = nameInput.value.trim();
-  const ig   = igInput.value.trim().replace(/^@/, '');
-
-  if (!name || name.length < 2) {
-    showErr(nameInput, nameError, 'Nama minimal 2 karakter.');
-    ok = false;
-  } else {
-    markValid(nameInput);
+  function showErr(input, errEl, msg) {
+    if (input) { input.classList.add('is-invalid'); input.classList.remove('is-valid'); }
+    errEl.textContent = msg;
+  }
+  function clearErr(input, errEl) {
+    if (input) input.classList.remove('is-invalid');
+    errEl.textContent = '';
+  }
+  function markValid(input) {
+    input.classList.remove('is-invalid');
+    input.classList.add('is-valid');
   }
 
-  if (!ig || !/^[a-zA-Z0-9._]{1,30}$/.test(ig)) {
-    showErr(igInput, igError, 'Masukkan username Instagram yang valid.');
-    ok = false;
-  } else {
-    markValid(igInput);
+  nameInput.addEventListener('input', () => clearErr(nameInput, nameError));
+  igInput.addEventListener('input',   () => clearErr(igInput, igError));
+  consent.addEventListener('change',  () => clearErr(null, consentErr));
+
+  function validate() {
+    let ok = true;
+    const name = nameInput.value.trim();
+    const ig   = igInput.value.trim().replace(/^@/, '');
+
+    if (name.length < 2) {
+      showErr(nameInput, nameError, 'Nama minimal 2 karakter.');
+      ok = false;
+    } else {
+      markValid(nameInput);
+    }
+
+    if (!/^[a-zA-Z0-9._]{1,30}$/.test(ig)) {
+      showErr(igInput, igError, 'Masukkan username Instagram yang valid.');
+      ok = false;
+    } else {
+      markValid(igInput);
+    }
+
+    if (!consent.checked) {
+      consentErr.textContent = 'Centang persetujuan dulu ya.';
+      ok = false;
+    }
+
+    return ok;
   }
 
-  return ok;
-}
-
-if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!validate()) return;
 
-    // Loading state
+    if (!validate()) {
+      gtag('event', 'form_error', { form_id: 'waitlist' });
+      return;
+    }
+
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
+    submitBtn.textContent = 'Mengirim...';
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxq34f64RuFqPA1Zhsm6WWEJHeaW2ifVluVo2QjadxES4vyZwhDoFw10vgglDO8eAShdw/exec';
     const payload = {
-      nama: nameInput.value.trim(),
+      nama:      nameInput.value.trim(),
       instagram: igInput.value.trim().replace(/^@/, ''),
     };
 
-    // no-cors mode: Google Apps Script doesn't send CORS headers that
-    // satisfy a credentialed fetch, so we use no-cors (opaque response).
-    // We can't read the response body, but the data still lands in the Sheet.
+    /* Apps Script tidak mengirim header CORS untuk fetch biasa, jadi kita
+       pakai mode no-cors. Respons tidak bisa dibaca, tapi data tetap
+       masuk ke Google Sheet. */
     fetch(SCRIPT_URL, {
       method:  'POST',
-      mode:    'no-cors',          // ← key fix: skips CORS check
-      headers: { 'Content-Type': 'text/plain' },
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body:    JSON.stringify(payload),
     })
       .then(() => {
-        // With no-cors we always get an opaque response — treat reaching
-        // here as success (the POST was sent).
-        const igVal = payload.instagram;
+        gtag('event', 'generate_lead', {
+          method:   'waitlist_form',
+          currency: 'IDR',
+          value:    1,
+        });
 
-        // Show thank-you popup
-        const tyOverlay = document.getElementById('ty-overlay');
-        const tyIgName  = document.getElementById('ty-ig-name');
-        if (tyIgName)  tyIgName.textContent  = '@' + igVal;
-        if (tyOverlay) {
-          tyOverlay.classList.add('is-open');
-          document.body.style.overflow = 'hidden';
-        }
+        const igName = '@' + payload.instagram;
+        const tyIg   = document.getElementById('ty-ig-name');
+        if (tyIg) tyIg.textContent = igName;
 
-        // Reset button state
+        const successIg = document.getElementById('success-ig-name');
+        if (successIg) successIg.textContent = igName;
+
+        openOverlay(document.getElementById('ty-overlay'));
+
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
+        submitBtn.textContent = 'Gabung Waiting List';
+        form.reset();
       })
       .catch(() => {
         submitBtn.classList.remove('loading');
-        submitBtn.disabled    = false;
-        submitBtn.textContent = 'Coba Lagi';
-        alert('Tidak dapat terhubung. Periksa koneksi internetmu dan coba lagi.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Coba lagi';
+        igError.textContent = 'Koneksi bermasalah. Cek internetmu lalu coba lagi.';
+        gtag('event', 'form_error', { form_id: 'waitlist', reason: 'network' });
       });
-  }); // Akhir dari event listener
-} // Akhir dari if (form)
-
-// ── Scroll-in / entrance animations ────────────────────────
-function animateOnScroll() {
-  const targets = document.querySelectorAll(
-    '.pill-badge, .headline, .subheadline, .countdown, .perks-row, .form-section, .panel-footer'
-  );
-
-  targets.forEach((el, i) => {
-    el.classList.add('fade-in');
-    // Stagger entrance delay based on index
-    el.style.transitionDelay = `${i * 60}ms`;
   });
+})();
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
+/* ── Modal ───────────────────────────────────────────────── */
+let lastFocused = null;
 
-  targets.forEach((el) => io.observe(el));
+function openOverlay(overlay) {
+  if (!overlay) return;
+  lastFocused = document.activeElement;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  const btn = overlay.querySelector('.modal-close');
+  setTimeout(() => btn && btn.focus(), 60);
 }
 
-// Food cards staggered entrance
-function animateFoodCards() {
-  const cards = document.querySelectorAll('.food-card, .badge-float');
-  cards.forEach((card, i) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(28px) scale(.97)';
-    card.style.transition = `opacity .55s ease ${i * 100 + 200}ms, transform .55s ease ${i * 100 + 200}ms`;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        card.style.opacity = '';
-        card.style.transform = '';
-      });
-    });
-  });
+function closeOverlay(overlay) {
+  if (!overlay) return;
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocused) lastFocused.focus();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  animateOnScroll();
-  animateFoodCards();
-});
+/* Setelah Thank You ditutup, form diganti pesan sukses */
+function afterThankYou() {
+  const def = document.getElementById('form-default');
+  const suc = document.getElementById('form-success');
+  if (def) def.hidden = true;
+  if (suc) suc.hidden = false;
+}
 
+(function initModals() {
+  const privacy = document.getElementById('privacy-overlay');
+  const tnc     = document.getElementById('tnc-overlay');
+  const ty      = document.getElementById('ty-overlay');
 
-// ── FAQ Accordion ───────────────────────────────────────────
+  document.querySelectorAll('.privacy-link').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openOverlay(privacy);
+      gtag('event', 'view_privacy_policy');
+    });
+  });
+
+  const tncLink = document.getElementById('open-tnc');
+  if (tncLink) {
+    tncLink.addEventListener('click', (e) => { e.preventDefault(); openOverlay(tnc); });
+  }
+
+  [['pp-close', privacy], ['pp-close-btn', privacy],
+   ['tnc-close', tnc],    ['tnc-close-btn', tnc]].forEach(([id, ov]) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => closeOverlay(ov));
+  });
+
+  ['ty-close-x', 'ty-close-btn'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => { closeOverlay(ty); afterThankYou(); });
+  });
+
+  document.querySelectorAll('.overlay').forEach((ov) => {
+    ov.addEventListener('click', (e) => {
+      if (e.target !== ov) return;
+      closeOverlay(ov);
+      if (ov === ty) afterThankYou();
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.overlay.is-open').forEach((ov) => {
+      closeOverlay(ov);
+      if (ov === ty) afterThankYou();
+    });
+  });
+
+  /* Focus trap */
+  document.querySelectorAll('.overlay').forEach((ov) => {
+    ov.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(ov.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )).filter((el) => !el.disabled && el.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last  = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  });
+})();
+
+/* ── FAQ accordion ───────────────────────────────────────── */
 (function initFaq() {
   const triggers = document.querySelectorAll('.faq-trigger');
   if (!triggers.length) return;
 
+  function close(trigger) {
+    const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+    trigger.setAttribute('aria-expanded', 'false');
+    if (!panel) return;
+    panel.style.maxHeight = '0';
+    panel.addEventListener('transitionend', function handler() {
+      if (trigger.getAttribute('aria-expanded') === 'false') panel.hidden = true;
+      panel.removeEventListener('transitionend', handler);
+    });
+  }
+
   triggers.forEach((trigger) => {
     trigger.addEventListener('click', () => {
-      const isOpen   = trigger.getAttribute('aria-expanded') === 'true';
-      const panelId  = trigger.getAttribute('aria-controls');
-      const panel    = document.getElementById(panelId);
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      triggers.forEach((t) => { if (t !== trigger) close(t); });
 
-      // Close every other open item first
-      triggers.forEach((t) => {
-        if (t === trigger) return;
-        t.setAttribute('aria-expanded', 'false');
-        const p = document.getElementById(t.getAttribute('aria-controls'));
-        if (p) {
-          p.style.maxHeight = '0';
-          // hide after transition so it leaves the flow
-          p.addEventListener('transitionend', () => { p.hidden = true; }, { once: true });
-        }
+      if (isOpen) { close(trigger); return; }
+
+      const panel = document.getElementById(trigger.getAttribute('aria-controls'));
+      trigger.setAttribute('aria-expanded', 'true');
+      if (!panel) return;
+      panel.hidden = false;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { panel.style.maxHeight = panel.scrollHeight + 'px'; });
       });
-
-      if (isOpen) {
-        // Close this one
-        trigger.setAttribute('aria-expanded', 'false');
-        panel.style.maxHeight = '0';
-        panel.addEventListener('transitionend', () => { panel.hidden = true; }, { once: true });
-      } else {
-        // Open this one
-        panel.hidden = false;
-        // Allow paint before animating
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            panel.style.maxHeight = panel.scrollHeight + 'px';
-          });
-        });
-        trigger.setAttribute('aria-expanded', 'true');
-      }
+      gtag('event', 'faq_open', { question: trigger.textContent.replace('+', '').trim() });
     });
   });
-
-  // Give panels the CSS transition they need
-  const style = document.createElement('style');
-  style.textContent = `
-    .faq-answer {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height .35s ease;
-    }
-    .faq-answer:not([hidden]) {
-      /* max-height set by JS */
-    }
-  `;
-  document.head.appendChild(style);
 })();
 
-// ── Scroll-reveal for .ds-reveal elements ──────────────────
+/* ── Scroll reveal ───────────────────────────────────────── */
 (function initReveal() {
-  const targets = document.querySelectorAll('.ds-reveal');
+  const targets = document.querySelectorAll('.reveal');
   if (!targets.length) return;
 
-  // Stagger siblings inside the same parent grid/list
-  const parentMap = new Map();
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((el) => el.classList.add('visible'));
+    return;
+  }
+
+  const byParent = new Map();
   targets.forEach((el) => {
-    const key = el.parentElement;
-    if (!parentMap.has(key)) parentMap.set(key, []);
-    parentMap.get(key).push(el);
+    if (!byParent.has(el.parentElement)) byParent.set(el.parentElement, []);
+    byParent.get(el.parentElement).push(el);
   });
-  parentMap.forEach((siblings) => {
-    siblings.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 90}ms`;
-    });
+  byParent.forEach((siblings) => {
+    siblings.forEach((el, i) => { el.style.transitionDelay = (i * 80) + 'ms'; });
   });
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-  );
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   targets.forEach((el) => io.observe(el));
 })();
 
-// ── Privacy Policy Modal ────────────────────────────────────
-(function initPrivacyModal() {
-  const overlay   = document.getElementById('privacy-overlay');
-  const closeBtn  = document.getElementById('pp-close');
-  const closeCta  = document.getElementById('pp-close-btn');
-  const trigger   = document.querySelector('.privacy-link');
+/* ── Scroll depth (untuk lihat sejauh mana orang baca) ───── */
+(function initScrollDepth() {
+  const marks = [25, 50, 75, 90];
+  const fired = new Set();
+  let ticking = false;
 
-  if (!overlay) return;
-
-  function openModal() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    // Move focus to close button for a11y
-    setTimeout(() => closeBtn && closeBtn.focus(), 50);
-  }
-
-  function closeModal() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    // Return focus to trigger
-    if (trigger) trigger.focus();
-  }
-
-  // Open via privacy link
-  if (trigger) {
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      openModal();
+  function check() {
+    const h = document.documentElement;
+    const pct = Math.round(((h.scrollTop + window.innerHeight) / h.scrollHeight) * 100);
+    marks.forEach((m) => {
+      if (pct >= m && !fired.has(m)) {
+        fired.add(m);
+        gtag('event', 'scroll_depth', { percent: m });
+      }
     });
+    ticking = false;
   }
 
-  // Close via X button
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-  // Close via "Saya Mengerti" button
-  if (closeCta) closeCta.addEventListener('click', closeModal);
-
-  // Close on backdrop click (not on modal itself)
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
-      closeModal();
-    }
-  });
-
-  // Trap focus inside modal while open
-  overlay.addEventListener('keydown', (e) => {
-    if (e.key !== 'Tab') return;
-    const focusable = Array.from(
-      overlay.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
-    ).filter((el) => !el.disabled && el.offsetParent !== null);
-
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last  = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(check);
+  }, { passive: true });
 })();
 
-// ── Thank You Popup ─────────────────────────────────────────
-(function initTyPopup() {
-  const overlay  = document.getElementById('ty-overlay');
-  const closeBtn = document.getElementById('ty-close-btn');
-  const closeX   = document.getElementById('ty-close-x');
-  if (!overlay) return;
 
-  function closeTy() {
-    overlay.classList.remove('is-open');
-    document.body.style.overflow = '';
+/* ── Welcome pop-up ──────────────────────────────────────── */
+(function initWelcome() {
+  const overlay = document.getElementById('welcome-overlay');
+  if (!overlay || !WELCOME_POPUP.enabled) return;
 
-    // Replace form with success state so user sees confirmation
-    const formDefault  = document.getElementById('form-default');
-    const formSuccess  = document.getElementById('form-success');
-    const successIgEl  = document.getElementById('success-ig-name');
-    const tyIgEl       = document.getElementById('ty-ig-name');
-
-    // Copy the IG name from popup to inline success message
-    if (successIgEl && tyIgEl) {
-      successIgEl.textContent = tyIgEl.textContent;
-    }
-
-    if (formDefault) formDefault.hidden = true;
-    if (formSuccess) formSuccess.hidden = false;
-
-    // Scroll form section into view
-    const formSection = document.getElementById('form');
-    if (formSection) formSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const KEY = 'pf_welcome_seen';
+  if (WELCOME_POPUP.oncePerSession) {
+    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
   }
 
-  if (closeBtn) closeBtn.addEventListener('click', closeTy);
-  if (closeX)   closeX.addEventListener('click',   closeTy);
+  let shown = false;
+  let timerDone = false;
 
-  // Close on backdrop click
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeTy();
+  function alreadyConverted() {
+    const suc = document.getElementById('form-success');
+    return suc && !suc.hidden;
+  }
+
+  function heroPassed() {
+    const hero = document.getElementById('beranda');
+    return !hero || hero.getBoundingClientRect().bottom < 0;
+  }
+
+  function show() {
+    if (shown || alreadyConverted()) return;
+    if (document.querySelector('.overlay.is-open')) return;
+    shown = true;
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    openOverlay(overlay);
+    gtag('event', 'welcome_popup_view');
+  }
+
+  function maybeShow() {
+    if (!timerDone) return;
+    if (WELCOME_POPUP.requireScrollPastHero && !heroPassed()) return;
+    show();
+    window.removeEventListener('scroll', maybeShow);
+  }
+
+  setTimeout(() => { timerDone = true; maybeShow(); }, WELCOME_POPUP.delayMs);
+  window.addEventListener('scroll', maybeShow, { passive: true });
+
+  const closeBtn = document.getElementById('welcome-close');
+  const later    = document.getElementById('welcome-later');
+  const cta      = document.getElementById('welcome-cta');
+
+  [closeBtn, later].forEach((el) => {
+    if (el) el.addEventListener('click', () => {
+      closeOverlay(overlay);
+      gtag('event', 'welcome_popup_dismiss');
+    });
   });
 
-  // Close on Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeTy();
-  });
+  if (cta) {
+    cta.addEventListener('click', () => {
+      closeOverlay(overlay);
+      gtag('event', 'cta_click', { cta_location: 'welcome_popup' });
+      const form = document.getElementById('form');
+      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        const nameField = document.getElementById('full-name');
+        if (nameField) nameField.focus();
+      }, 700);
+    });
+  }
 })();
