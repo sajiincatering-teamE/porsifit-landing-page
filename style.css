@@ -338,7 +338,12 @@ footer{background:var(--ink);color:var(--cream);padding:52px 20px 26px;}
 .foot-grid{
   max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;
 }
-.foot-brand img{height:44px;filter:brightness(0) invert(1);opacity:.92;}
+.foot-brand img{
+  height:44px;
+  width:auto;
+  filter:none;
+  opacity:1;
+}
 .foot-brand p{color:rgba(248,240,222,.72);font-size:13px;margin-top:14px;max-width:34ch;}
 .foot-col h4{font-size:15px;margin-bottom:12px;}
 .foot-col a{display:block;font-size:13px;color:rgba(248,240,222,.72);margin-bottom:9px;}
