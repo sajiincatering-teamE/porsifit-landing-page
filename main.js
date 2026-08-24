@@ -1,12 +1,12 @@
 /* ==========================================================================
    PorsiFit — main.js
-   Lead form + Google Sheets (Apps Script) + modal + FAQ + tracking GA4
+   Lead form + Google Sheets (Apps Script) + modal + FAQ + tracking via GTM dataLayer
    ========================================================================== */
 
 'use strict';
 
-/* Fallback kalau gtag belum termuat (adblock, koneksi lambat) */
-window.gtag = window.gtag || function () {};
+/* dataLayer untuk GTM — semua tracking lewat sini */
+window.dataLayer = window.dataLayer || [];
 
 /* ── Konfigurasi ─────────────────────────────────────────── */
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxq34f64RuFqPA1Zhsm6WWEJHeaW2ifVluVo2QjadxES4vyZwhDoFw10vgglDO8eAShdw/exec';
@@ -48,7 +48,7 @@ const WELCOME_POPUP = {
 /* ── Tracking klik CTA ───────────────────────────────────── */
 document.querySelectorAll('.js-cta').forEach((el) => {
   el.addEventListener('click', () => {
-    gtag('event', 'cta_click', { cta_location: el.dataset.cta || 'unknown' });
+    dataLayer.push({ event: 'cta_click', cta_location: el.dataset.cta || 'unknown' });
   });
 });
 
@@ -113,7 +113,7 @@ document.querySelectorAll('.js-cta').forEach((el) => {
     e.preventDefault();
 
     if (!validate()) {
-      gtag('event', 'form_error', { form_id: 'waitlist' });
+      dataLayer.push({ event: 'form_error', form_id: 'waitlist' });
       return;
     }
 
@@ -136,7 +136,8 @@ document.querySelectorAll('.js-cta').forEach((el) => {
       body:    JSON.stringify(payload),
     })
       .then(() => {
-        gtag('event', 'generate_lead', {
+        dataLayer.push({
+          event:    'generate_lead',
           method:   'waitlist_form',
           currency: 'IDR',
           value:    1,
@@ -161,7 +162,7 @@ document.querySelectorAll('.js-cta').forEach((el) => {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Coba lagi';
         igError.textContent = 'Koneksi bermasalah. Cek internetmu lalu coba lagi.';
-        gtag('event', 'form_error', { form_id: 'waitlist', reason: 'network' });
+        dataLayer.push({ event: 'form_error', form_id: 'waitlist', reason: 'network' });
       });
   });
 })();
@@ -204,7 +205,7 @@ function afterThankYou() {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       openOverlay(privacy);
-      gtag('event', 'view_privacy_policy');
+      dataLayer.push({ event: 'view_privacy_policy' });
     });
   });
 
@@ -286,7 +287,7 @@ function afterThankYou() {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => { panel.style.maxHeight = panel.scrollHeight + 'px'; });
       });
-      gtag('event', 'faq_open', { question: trigger.textContent.replace('+', '').trim() });
+      dataLayer.push({ event: 'faq_open', question: trigger.textContent.replace('+', '').trim() });
     });
   });
 })();
@@ -333,7 +334,7 @@ function afterThankYou() {
     marks.forEach((m) => {
       if (pct >= m && !fired.has(m)) {
         fired.add(m);
-        gtag('event', 'scroll_depth', { percent: m });
+        dataLayer.push({ event: 'scroll_depth', percent: m });
       }
     });
     ticking = false;
@@ -376,7 +377,7 @@ function afterThankYou() {
     shown = true;
     try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
     openOverlay(overlay);
-    gtag('event', 'welcome_popup_view');
+    dataLayer.push({ event: 'welcome_popup_view' });
   }
 
   function maybeShow() {
@@ -396,14 +397,14 @@ function afterThankYou() {
   [closeBtn, later].forEach((el) => {
     if (el) el.addEventListener('click', () => {
       closeOverlay(overlay);
-      gtag('event', 'welcome_popup_dismiss');
+      dataLayer.push({ event: 'welcome_popup_dismiss' });
     });
   });
 
   if (cta) {
     cta.addEventListener('click', () => {
       closeOverlay(overlay);
-      gtag('event', 'cta_click', { cta_location: 'welcome_popup' });
+      dataLayer.push({ event: 'cta_click', cta_location: 'welcome_popup' });
       const form = document.getElementById('form');
       if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => {
