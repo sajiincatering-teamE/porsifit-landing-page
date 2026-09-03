@@ -78,6 +78,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span style="display:block">🍓 Strawberry Collagen 250ml</span>
 <span style="display:block">🍵 Matcha Detox 250ml</span>
 <span style="display:block; margin-top:4px">Cuma untuk 100 pendaftar pertama. Jangan sampai ketinggalan!</span>
+        </div>
       </div>
     </div>
 
@@ -507,6 +508,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="btn btn-primary btn-block" id="ty-close-btn" style="margin-top:18px;">Siap, aku tunggu!</button>
   </div>
 </div>
+
+<!-- ============ STICKY COUNTDOWN BAR ============ -->
+<div id="sticky-bar" style="
+  position:fixed; bottom:0; left:0; right:0; z-index:9999;
+  background:linear-gradient(135deg,#3a3a3a 0%,#1a1a1a 100%);
+  padding:10px 16px 12px; text-align:center;
+  box-shadow:0 -4px 24px rgba(0,0,0,.3);
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  transition:transform .3s ease;
+">
+  <span style="color:#ffffffcc; font-size:12px; letter-spacing:.3px;">Kesempatan Ambil Promo Berakhir Dalam</span>
+  <div style="display:flex; align-items:center; gap:6px; margin:2px 0;">
+    <div style="display:flex; align-items:center; gap:3px;">
+      <span id="cd-hours" style="background:#BBDF81; color:#1a1a1a; font-weight:800; font-size:24px; padding:4px 10px; border-radius:6px; min-width:44px; display:inline-block; text-align:center;">00</span>
+      <span style="color:#ffffffcc; font-size:12px; font-weight:600;">jam</span>
+    </div>
+    <span style="color:#BBDF81; font-weight:800; font-size:22px;">:</span>
+    <div style="display:flex; align-items:center; gap:3px;">
+      <span id="cd-mins" style="background:#BBDF81; color:#1a1a1a; font-weight:800; font-size:24px; padding:4px 10px; border-radius:6px; min-width:44px; display:inline-block; text-align:center;">00</span>
+      <span style="color:#ffffffcc; font-size:12px; font-weight:600;">menit</span>
+    </div>
+    <span style="color:#BBDF81; font-weight:800; font-size:22px;">:</span>
+    <div style="display:flex; align-items:center; gap:3px;">
+      <span id="cd-secs" style="background:#BBDF81; color:#1a1a1a; font-weight:800; font-size:24px; padding:4px 10px; border-radius:6px; min-width:44px; display:inline-block; text-align:center;">00</span>
+      <span style="color:#ffffffcc; font-size:12px; font-weight:600;">detik</span>
+    </div>
+  </div>
+  <a href="#form" id="sticky-cta" style="
+    display:inline-block; background:#BBDF81; color:#1a1a1a;
+    font-weight:700; font-size:14px; padding:10px 32px;
+    border-radius:50px; text-decoration:none;
+    width:100%; max-width:340px; box-sizing:border-box; text-align:center;
+  ">Amankan sekarang, gabung waiting list.</a>
+</div>
+
+<style>
+  body { padding-bottom: 130px; }
+  #sticky-bar a:active { opacity:.85; }
+  @media(min-width:768px){
+    body { padding-bottom: 110px; }
+    #sticky-bar { flex-direction:row; gap:16px; padding:12px 24px; }
+    #sticky-bar > span:first-child { display:none; }
+    #sticky-cta { width:auto; max-width:none; white-space:nowrap; }
+  }
+</style>
+
+<script>
+(function(){
+  // Campaign berakhir 4 September 2026 pukul 23:59:59 WIB (UTC+7)
+  var end = new Date('2026-09-04T23:59:59+07:00').getTime();
+
+  var hEl = document.getElementById('cd-hours');
+  var mEl = document.getElementById('cd-mins');
+  var sEl = document.getElementById('cd-secs');
+  var bar = document.getElementById('sticky-bar');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function update() {
+    var diff = end - Date.now();
+    if (diff <= 0) {
+      hEl.textContent = '00';
+      mEl.textContent = '00';
+      sEl.textContent = '00';
+      bar.style.display = 'none';
+      return;
+    }
+    hEl.textContent = pad(Math.floor(diff / 3600000));
+    mEl.textContent = pad(Math.floor((diff % 3600000) / 60000));
+    sEl.textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  update();
+  setInterval(update, 1000);
+
+  // Sembunyikan bar saat user sudah di area form
+  var formEl = document.getElementById('form');
+  if (formEl && bar) {
+    var io = new IntersectionObserver(function(entries){
+      bar.style.transform = entries[0].isIntersecting ? 'translateY(100%)' : 'translateY(0)';
+    }, { threshold: 0.3 });
+    io.observe(formEl);
+  }
+})();
+</script>
 
 <script src="main.js" defer></script>
 </body>
