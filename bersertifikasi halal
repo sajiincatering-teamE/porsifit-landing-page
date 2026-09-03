@@ -74,7 +74,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="ico">🎁</span>
         <div>
           <strong>100 pendaftar pertama dapat Bonus Smoothies senilai Rp100.000!</strong>
-          <span>🍓 Strawberry Collagen 250ml · 🍵 Matcha Detox 250ml. Cuma untuk 100 pendaftar pertama. Jangan sampai ketinggalan!</span>
+         <span>Yang kamu dapat:</span>
+          <span>🍓 Strawberry Collagen 250ml</span>
+          <span>🍵 Matcha Detox 250ml.</span>
+          
+           <span>Cuma untuk 100 pendaftar pertama. Jangan sampai ketinggalan!</span>
         </div>
       </div>
     </div>
@@ -224,7 +228,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="paket" id="paket">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-eyebrow">Dua paket</span>
+      <span class="sec-eyebrow">PAKET PORSIFIT</span>
       <h2>Kamu tim Shape atau tim Glow?</h2>
     </div>
     <div class="pkg-grid">
@@ -233,7 +237,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="pkg-body">
           <span class="pkg-tag">KALAU TUJUANMU JAGA BERAT BADAN</span>
           <h3>PorsiFit Shape</h3>
-          <p>Protein tinggi biar kenyangnya tahan sampai sore dan kalori dijaga di 350-420 kkal / box</p>
+          <p>Protein tinggi biar kenyangnya tahan sampai sore dan kalori dijaga di 350-420 kkal / box.</p>
           <ul>
             <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#5C7A5B"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Kalori dan protein tercetak di label</li>
             <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#5C7A5B"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Porsi ditakar, bukan dikira-kira</li>
@@ -253,7 +257,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="pkg-body">
           <span class="pkg-tag">KALAU KULIT LAGI JADI PRIORITAS</span>
           <h3>PorsiFit Glow</h3>
-          <p>Skincare kerja dari luar, makanan kerja dari dalam. Dengan bahan makanan tinggi Omega-3, Antioksidan, Vitamin A, C, dan E dengan kalori tetap dijaga di 380-420 kkal / box</p>
+          <p>Skincare kerja dari luar, makanan kerja dari dalam. Dengan bahan makanan tinggi Omega-3, Antioksidan, Vitamin A, C, dan E dengan kalori tetap dijaga di 380-420 kkal / box.</p>
           <ul>
             <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#C97D77"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Kaya nutrisi yang baik untuk kesehatan kulit</li>
             <li><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="9" fill="#C97D77"/><path d="M5 9l2.5 2.5L13 6" stroke="#F8F0DE" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Porsi sayur dan buah lebih banyak</li>
@@ -276,7 +280,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-eyebrow">Yang bisa kami pertanggungjawabkan</span>
-      <h2>Enam hal yang kami pegang</h2>
+      <h2>6 Hal yang Kami Pegang</h2>
     </div>
     <div class="usp-grid">
       <div class="usp reveal"><div class="ico">🌶️</div><h3>Bumbu lengkap, tetap ada nasi</h3><p>Ini alasan utama orang bertahan lebih dari seminggu. Kami masak seperti masakan rumah, bukan salad.</p></div>
@@ -293,8 +297,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="harga" id="harga">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-eyebrow">Price list</span>
-      <h2>Mulai dari Rp. 59K/meal</h2>
+      <span class="sec-eyebrow">DAFTAR HARGA</span>
+      <h2>Mulai dari Rp. 59K.000 /meal</h2>
     </div>
     <div class="price-grid">
       <div class="price-card shape reveal">
